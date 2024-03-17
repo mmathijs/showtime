@@ -17,11 +17,7 @@ Route::get('/', function () {
     ]);
 })->name('welcome');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard', [
-        'roles' => auth()->user()->roles()->get(),
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [PageController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -34,4 +30,4 @@ Route::get('/test2', [TestController::class, 'updateAct'])->middleware(['auth', 
 
 Route::get('/stream', [PageController::class, 'stream'])->middleware(['auth', 'verified'])->name('stream');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
