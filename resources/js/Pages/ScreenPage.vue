@@ -49,8 +49,8 @@ onMounted(() => {
 
             <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px"
                  v-else-if="currentAct.display_type==='Pauze'">
-                <h1 class="text-7xl font-semibold">{{ currentAct.type }}</h1>
-                <h2 class="text-6xl font-semibold">{{ currentAct.name }}</h2>
+                <h1 class="text-7xl font-semibold">{{ currentAct.name }}</h1>
+                <h2 class="text-6xl font-semibold">{{ currentAct.description }}</h2>
             </div>
             <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
                 <h1 class="text-7xl font-semibold">{{ currentAct.name }}</h1>

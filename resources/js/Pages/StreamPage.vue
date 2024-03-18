@@ -33,6 +33,10 @@ onMounted(() => {
 
 <template>
     <div class="w-screen h-screen relative" style="background-color: #6f0599">
+        <!--        <div class="absolute top-0 left-0 z-20 bg-white p-4 m-4 rounded-lg overflow-hidden">-->
+        <!--            <img src="/assets/images/logo.svg" width="250">-->
+        <!--&lt;!&ndash;            <img src="/assets/images/download.png" width="150">&ndash;&gt;-->
+        <!--        </div>-->
         <div v-if="show" class="w-screen overflow-hidden z-10 h-screen absolute top-0 left-0 animation">
             <div class="left-half absolute h-full" style="background-color: blue"></div>
             <div class="middle-logo z-40 rounded-full bg-white absolute overflow-hidden">
@@ -41,17 +45,27 @@ onMounted(() => {
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
 
-        <div v-if="act.display_type=== 'ActSingle'"
-             class="rounded-xl bg-blue-900 h-24 text-3xl p-4  text-white text-5xl absolute bottom-0 right-0 m-4 flex place-items-center"
-             style="width: 600px; text-align: right">
-            {{ act.type }}
-            <p></p>
+        <div v-if="act.display_type=== 'ActSingle'" class="absolute flex flex-col bottom-0 left-0 rounded-lg m-4 overflow-hidden">
+            <div class="bg-white p-4 w-60 rounded-t-lg">
+                <img src="/assets/images/logo.svg">
+            </div>
+            <div
+                class="bg-blue-800 h-24 text-3xl p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
+                style="width: 600px; text-align: right">
+                {{ act.type }}
+                <p></p>
+            </div>
         </div>
         <div v-else-if="act.display_type==='Pauze'"
-             class="w-screen h-screen absolute bg-blue-900 flex flex-col items-center justify-center">
-            <h1 class="text-7xl font-semibold text-white text-center">{{ act.type }}</h1>
-            <h2 class="text-6xl font-semibold text-white text-center">{{ act.name }}</h2>
-
+             class="w-screen h-screen absolute bg-blue-900 flex flex-col flex-wrap items-center justify-center">
+                    <div class="absolute top-0 left-0 bg-white p-4 m-4 rounded-lg overflow-hidden">
+                        <img src="/assets/images/logo.svg" width="250">
+            <!--            <img src="/assets/images/download.png" width="150">-->
+                    </div>
+            <div style="max-width: 1000px">
+                <h1 class="text-7xl font-semibold text-white text-center">{{ act.name }}</h1>
+                <h2 class="text-6xl font-semibold text-white text-center">{{ act.description }}</h2>
+            </div>
         </div>
     </div>
 </template>
