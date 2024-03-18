@@ -26,10 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/test', [TestController::class, 'index'])->middleware(['auth', 'verified'])->name('test');
-Route::get('/test2', [TestController::class, 'updateAct'])->middleware(['auth', 'verified'])->name('test2');
-
 Route::get('/stream', [PageController::class, 'stream'])->middleware(['auth', 'verified'])->name('stream');
+Route::get('/screen', [PageController::class, 'screen'])->middleware(['auth', 'verified'])->name('screen');
 
 Route::post('/act/launch', [ActController::class, 'launch'])->middleware(['auth', 'verified'])->name('act.launch');
 

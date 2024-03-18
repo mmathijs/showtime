@@ -1,5 +1,4 @@
 <script setup>
-import "../../css/app.css";
 
 import {onMounted, ref} from "vue";
 
@@ -10,7 +9,7 @@ const props = defineProps({
     }
 });
 
-const act = ref(props.currentAct);
+const currentAct = ref(props.currentAct);
 const show = ref(false);
 
 onMounted(() => {
@@ -18,7 +17,7 @@ onMounted(() => {
         .listen('UpdateAct', (e) => {
             show.value = true;
             setTimeout(() => {
-                act.value = e.act;
+                currentAct.value = e.act;
             }, 1000);
             setTimeout(() => {
                 show.value = false;
@@ -32,31 +31,38 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="w-screen h-screen relative" style="background-color: #6f0599">
+    <div class="w-screen h-screen relative bg-white dark:bg-gray-900 dark:text-white">
         <div v-if="show" class="w-screen overflow-hidden z-10 h-screen absolute top-0 left-0 animation">
             <div class="left-half absolute h-full" style="background-color: blue"></div>
             <div class="middle-logo z-40 rounded-full bg-white absolute overflow-hidden">
-                <img class="w-full p-6 top-50 absolute" src="/assets/images/img.png" alt="logo">
+                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">
             </div>
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
 
-        <div class="rounded-xl bg-blue-900 h-24 text-3xl p-4  text-white text-5xl absolute bottom-0 right-0 m-4 flex place-items-center" style="width: 600px; text-align: right">
-            {{act.type}}
-            <p></p>
+        <div class="w-screen h-screen flex items-center">
+            <div class="text-center my-auto mx-auto gap-1 flex flex-col" v-if="currentAct.display_type=== 'ActSingle'">
+                <h2 class="text-3xl text-gray-300 font-bold">{{currentAct.type}}</h2>
+                <h1 class="text-6xl font-semibold">{{ currentAct.name }}</h1>
+                <p class="text-4xl mt-4 font-semibold">{{ currentAct.people }}</p>
+            </div>
+            <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
+                <h1 class="text-7xl font-semibold">{{ currentAct.name }}</h1>
+                <div class="flex flex-wrap">
+                    <!-- Show all people, but split the all names on the , to make sure every name is on a compelte line                    -->
+                    <div class="text-3xl flex gap-2 flex-wrap h-32  justify-center" style="width: 1000px">
+                        <p class="whitespace-nowrap text-center" v-for="person in currentAct.people.split(',')"
+                           :key="person">{{ person }}{{ currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ','}} </p>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <style>
 
-.w-screen {
-    width: 100vw;
-}
-
-.h-screen {
-    height: 100vh;
-}
 
 .right-half, .left-half {
     animation: slide 2s forwards;
@@ -85,12 +91,12 @@ onMounted(() => {
 }
 
 .middle-logo {
-    width: 240px;
-    height: 240px;
+    width: 280px;
+    height: 280px;
 
-    left: calc(50% - 120px);
+    left: calc(50% - 140px);
     animation: scale 2s forwards;
-    top: calc(50% - 120px);
+    top: calc(50% - 140px);
 }
 
 .middle-logo img {
@@ -114,6 +120,10 @@ onMounted(() => {
     100% {
         transform: scale(0);
     }
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
 }
 
 </style>

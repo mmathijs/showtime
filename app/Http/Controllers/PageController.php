@@ -14,9 +14,18 @@ class PageController extends Controller
         }
 
         return Inertia::render('StreamPage', [
-            'currentAct' =>  [
-                'title' => 'Act 1',
-            ]
+            'currentAct' => Act::query()->where('current', true)->first(),
+        ]);
+    }
+
+    public function screen()
+    {
+        if (!auth()->user()->hasPermissionTo('acts')) {
+            return redirect()->route('welcome');
+        }
+
+        return Inertia::render('ScreenPage', [
+            'currentAct' => Act::query()->where('current', true)->first(),
         ]);
     }
 
@@ -28,7 +37,7 @@ class PageController extends Controller
 
         return Inertia::render('Dashboard', [
             'acts' => Act::all(),
-            'currentAct' =>  Act::query()->where('current', true)->first(),
+            'currentAct' => Act::query()->where('current', true)->first(),
         ]);
     }
 }
