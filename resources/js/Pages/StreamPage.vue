@@ -11,7 +11,7 @@ const props = defineProps({
 });
 
 const act = ref(props.currentAct);
-const show = ref(true);
+const show = ref(false);
 
 onMounted(() => {
     window.Echo.private('act-update')

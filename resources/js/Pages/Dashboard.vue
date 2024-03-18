@@ -55,6 +55,19 @@ onMounted(() => {
 });
 
 function launchAct(act) {
+    if (act.id === currentAct.value.id) {
+        axios.post('/act/start', {
+            act_id: act.id
+        })
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        return;
+    }
+
     axios.post('/act/launch', {
         act_id: act.id
     })
@@ -139,7 +152,7 @@ function launchAct(act) {
                                         @click="launchAct(act)"
                                         class="text-white bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 px-4 py-2 rounded-md"
                                     >
-                                        {{ act.id === currentAct.id ? 'Active' : 'Launch' }}
+                                        {{ act.id === currentAct.id ? 'Start' : 'Launch' }}
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
