@@ -1,6 +1,7 @@
 <?php
 
 use App\Events\UpdateAct;
+use App\Http\Controllers\ActController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
@@ -29,5 +30,7 @@ Route::get('/test', [TestController::class, 'index'])->middleware(['auth', 'veri
 Route::get('/test2', [TestController::class, 'updateAct'])->middleware(['auth', 'verified'])->name('test2');
 
 Route::get('/stream', [PageController::class, 'stream'])->middleware(['auth', 'verified'])->name('stream');
+
+Route::post('/act/launch', [ActController::class, 'launch'])->middleware(['auth', 'verified'])->name('act.launch');
 
 require __DIR__ . '/auth.php';

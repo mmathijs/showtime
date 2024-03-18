@@ -42,7 +42,7 @@ onMounted(() => {
         </div>
 
         <div class="rounded-xl bg-blue-900 h-24 text-3xl p-4  text-white text-5xl absolute bottom-0 right-0 m-4 flex place-items-center" style="width: 600px; text-align: right">
-            {{act.title}}
+            {{act.type}}
             <p></p>
         </div>
     </div>
