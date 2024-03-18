@@ -28,7 +28,9 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/stream', [PageController::class, 'stream'])->middleware(['auth', 'verified'])->name('stream');
 Route::get('/screen', [PageController::class, 'screen'])->middleware(['auth', 'verified'])->name('screen');
+Route::get('/backstage', [PageController::class, 'backstage'])->middleware(['auth', 'verified'])->name('backstage');
 
 Route::post('/act/launch', [ActController::class, 'launch'])->middleware(['auth', 'verified'])->name('act.launch');
+Route::post('/act/start', [ActController::class, 'start'])->middleware(['auth', 'verified'])->name('act.start');
 
 require __DIR__ . '/auth.php';

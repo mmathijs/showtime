@@ -134,8 +134,9 @@ function launchAct(act) {
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-gray-100">{{ act.type }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-900 dark:text-gray-100">{{ act.name }}</div>
+                                <td class="px-6 py-4 whitespace-nowrap w-32">
+                                    <div class="text-sm text-gray-900 dark:text-gray-100 w-60">
+                                        <p class="truncate">{{ act.name }}</p></div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-gray-100">{{ act.display_type }}</div>
@@ -167,3 +168,12 @@ function launchAct(act) {
         </div>
     </AuthenticatedLayout>
 </template>
+
+<style>
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+</style>

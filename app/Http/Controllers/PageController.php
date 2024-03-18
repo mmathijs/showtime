@@ -29,6 +29,19 @@ class PageController extends Controller
         ]);
     }
 
+    public function backstage()
+    {
+        if (!auth()->user()->hasPermissionTo('acts')) {
+            return redirect()->route('welcome');
+        }
+
+        return Inertia::render('BackstagePage', [
+            'currentAct' => Act::query()->where('current', true)->first(),
+            'acts' => Act::all(),
+            'day' => '1'
+        ]);
+    }
+
     public function dashboard()
     {
         if (!auth()->user()->hasPermissionTo('dashboard')) {
