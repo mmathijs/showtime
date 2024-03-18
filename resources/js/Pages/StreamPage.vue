@@ -41,9 +41,17 @@ onMounted(() => {
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
 
-        <div class="rounded-xl bg-blue-900 h-24 text-3xl p-4  text-white text-5xl absolute bottom-0 right-0 m-4 flex place-items-center" style="width: 600px; text-align: right">
-            {{act.type}}
+        <div v-if="act.display_type=== 'ActSingle'"
+             class="rounded-xl bg-blue-900 h-24 text-3xl p-4  text-white text-5xl absolute bottom-0 right-0 m-4 flex place-items-center"
+             style="width: 600px; text-align: right">
+            {{ act.type }}
             <p></p>
+        </div>
+        <div v-else-if="act.display_type==='Pauze'"
+             class="w-screen h-screen absolute bg-blue-900 flex flex-col items-center justify-center">
+            <h1 class="text-7xl font-semibold text-white text-center">{{ act.type }}</h1>
+            <h2 class="text-6xl font-semibold text-white text-center">{{ act.name }}</h2>
+
         </div>
     </div>
 </template>

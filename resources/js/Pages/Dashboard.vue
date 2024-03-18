@@ -89,7 +89,7 @@ function launchAct(act) {
         </template>
 
         <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class=" sm:px-6 lg:px-8">
                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                     <!--                    <div class="p-6 font-semibold text-2xl text-gray-900 dark:text-gray-100">Acts:</div>-->
 
@@ -107,22 +107,24 @@ function launchAct(act) {
                                     Name
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
                                     Display Type
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
                                     People
                                 </th>
                                 <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
                                     Start Time
                                 </th>
-                                <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">Launch</span>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                                    Launch
                                 </th>
-                                <th scope="col" class="relative px-6 py-3">
-                                    <span class="sr-only">Actions</span>
+                                <th scope="col"
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
+                                    Edit
                                 </th>
                             </tr>
                             </thead>
@@ -148,16 +150,22 @@ function launchAct(act) {
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-gray-100">{{ act.start_time }}</div>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <button
                                         @click="launchAct(act)"
-                                        class="text-white bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 px-4 py-2 rounded-md"
+                                        class="text-white hover:bg-indigo-700 dark:hover:bg-indigo-600 px-4 py-2 rounded-md w-full"
+                                        :class="act.id === currentAct.id ? 'bg-green-200  dark:bg-green-500' : 'bg-indigo-600  dark:bg-indigo-500'"
                                     >
                                         {{ act.id === currentAct.id ? 'Start' : 'Launch' }}
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <advancement-dropdown :act="act" :current-act="currentAct"/>
+                                    <button
+                                        @click="editAct(act)"
+                                        class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-600"
+                                    >
+                                        Edit
+                                    </button>
                                 </td>
                             </tr>
                             </tbody>

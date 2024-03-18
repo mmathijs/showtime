@@ -42,9 +42,15 @@ onMounted(() => {
 
         <div class="w-screen h-screen flex items-center">
             <div class="text-center my-auto mx-auto gap-1 flex flex-col" v-if="currentAct.display_type=== 'ActSingle'">
-                <h2 class="text-4xl text-gray-300 font-bold">{{currentAct.type}}</h2>
+                <h2 class="text-4xl text-gray-300 font-bold">{{ currentAct.type }}</h2>
                 <h1 class="text-6xl font-semibold" v-html="currentAct.name"></h1>
                 <p class="text-4xl mt-4 font-semibold">{{ currentAct.people }}</p>
+            </div>
+
+            <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px"
+                 v-else-if="currentAct.display_type==='Pauze'">
+                <h1 class="text-7xl font-semibold">{{ currentAct.type }}</h1>
+                <h2 class="text-6xl font-semibold">{{ currentAct.name }}</h2>
             </div>
             <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
                 <h1 class="text-7xl font-semibold">{{ currentAct.name }}</h1>
@@ -52,7 +58,9 @@ onMounted(() => {
                     <!-- Show all people, but split the all names on the , to make sure every name is on a compelte line                    -->
                     <div class="text-3xl flex gap-2 flex-wrap h-32  justify-center" style="width: 1000px">
                         <p class="whitespace-nowrap text-center" v-for="person in currentAct.people.split(',')"
-                           :key="person">{{ person }}{{ currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ','}} </p>
+                           :key="person">{{
+                                person
+                            }}{{ currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ',' }} </p>
                     </div>
 
                 </div>

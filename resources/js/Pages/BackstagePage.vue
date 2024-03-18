@@ -180,7 +180,7 @@ function scroll() {
             <p v-if="countdown !== 0" class="mx-auto my-auto"
                style="font-family: 'Seven Segment', sans-serif; font-size: 2000%">
                 00:{{ countdown.toString().padStart(2, '0') }}</p>
-            <p v-else class="mx-auto my-auto" style="font-family: 'Seven Segment2', sans-serif; font-size: 2000%">
+            <p v-else class="mx-auto my-auto" style="font-family: 'Seven Segment2', sans-serif; font-size: 2500%">
                 SHOWTIME</p>
         </div>
 

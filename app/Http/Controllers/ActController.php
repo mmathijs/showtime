@@ -67,14 +67,12 @@ class ActController extends Controller
 
     public function timer()
     {
-        $timer = 6;
+        $timer = 5;
         $previousTimer = $timer;
 
-        event(new Countdown($timer, true));
+        event(new Countdown(5, true));
 
-        $timer--;
-
-        $startTime = time();
+        $startTime = time() - 0.25;
 
         $count = 1;
 
