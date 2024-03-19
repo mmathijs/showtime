@@ -45,12 +45,12 @@ onMounted(() => {
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
 
-        <div v-if="act.display_type=== 'ActSingle'" class="absolute flex flex-col bottom-0 left-0 rounded-lg m-4 overflow-hidden">
+        <div v-if="act.display_type=== 'ActSingle' || act.display_type=== 'ActBig'" class="absolute flex flex-col bottom-0 left-0 rounded-lg m-4 overflow-hidden">
             <div class="bg-white p-4 w-60 rounded-t-lg">
                 <img src="/assets/images/logo.svg">
             </div>
             <div
-                class="bg-blue-800 h-24 text-3xl p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
+                class="bg-blue-800 h-24 p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
                 style="width: 600px; text-align: right">
                 {{ act.type }}
                 <p></p>
