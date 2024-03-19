@@ -130,7 +130,7 @@ function scroll() {
                 <!-- A grid with 2 columns in one the current act and in the other one the next act                    -->
                 <div class="grid gap-4 h-full" :class="nextAct?'grid-rows-2':''">
                     <div class="rounded-xl flex flex-col bg-white  dark:bg-gray-900 rounded-xl p-4">
-                        <div class="flex justify-between w-full">
+                        <div class="flex justify-between w-full overflow-hidden ">
                             <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Current Act: <h2 class="ml-4 truncate">
                                 {{ currentAct.name }}</h2></div>
                             <h3 class="text-2xl font-bold flex-none">{{ currentAct.type }}</h3>
