@@ -130,7 +130,7 @@ onMounted(() => {
     50% {
         transform: scale(1);
     }
-    80% {
+    65% {
         transform: scale(0);
     }
     100% {
