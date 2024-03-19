@@ -10,7 +10,7 @@ const props = defineProps({
 });
 
 const currentAct = ref(props.currentAct);
-const show = ref(false);
+const show = ref(true);
 
 onMounted(() => {
     window.Echo.private('act-update')
@@ -35,7 +35,8 @@ onMounted(() => {
         <div v-if="show" class="w-screen overflow-hidden z-10 h-screen absolute top-0 left-0 animation">
             <div class="left-half absolute h-full" style="background-color: blue"></div>
             <div class="middle-logo z-40 rounded-full bg-white absolute overflow-hidden">
-                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">
+<!--                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">-->
+                <img class="w-full p-4 top-50 absolute" src="/assets/images/ijsingwekkend.jpg" alt="logo">
             </div>
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
@@ -120,7 +121,7 @@ onMounted(() => {
         transform: scale(0);
     }
     50% {
-        transform: scale(1);
+        transform: scale(1.25);
     }
     80% {
         transform: scale(0);
