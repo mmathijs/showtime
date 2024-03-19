@@ -128,8 +128,8 @@ function scroll() {
             </div>
             <div style="grid-column: 3 / span 7; padding: 0;">
                 <!-- A grid with 2 columns in one the current act and in the other one the next act                    -->
-                <div class="grid gap-4 h-full" :class="nextAct?'grid-rows-2':''">
-                    <div class="rounded-xl flex flex-col bg-white  dark:bg-gray-900 rounded-xl p-4">
+                <div class="grid gap-4 h-full overflow-hidden" :class="nextAct?'grid-rows-2':''">
+                    <div class="rounded-xl flex flex-col bg-white dark:bg-gray-900 p-4">
                         <div class="flex justify-between w-full overflow-hidden ">
                             <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Current Act: <h2 class="ml-4 truncate">
                                 {{ currentAct.name }}</h2></div>
@@ -147,7 +147,7 @@ function scroll() {
                             </div>
                         </div>
                     </div>
-                    <div v-if="nextAct" class="bg-white dark:bg-gray-900 rounded-xl p-4 flex flex-col gap-4">
+                    <div v-if="nextAct" class="bg-white dark:bg-gray-900 rounded-xl p-4 flex flex-col">
                         <div class="flex justify-between w-full overflow-hidden ">
                             <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Next Act: <h2 class="ml-4 truncate">
                                 {{ nextAct.name }}</h2></div>
