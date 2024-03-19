@@ -90,7 +90,7 @@ function launchAct(act) {
 
         <div class="py-12">
             <div class=" sm:px-6 lg:px-8">
-                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="bg-white dark:bg-gray-800 overflow-y-scroll shadow-sm sm:rounded-lg">
                     <!--                    <div class="p-6 font-semibold text-2xl text-gray-900 dark:text-gray-100">Acts:</div>-->
 
                     <!-- Table with act.type, act.name, act.display_type, act.people, start_time    -->
