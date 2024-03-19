@@ -44,7 +44,7 @@ onMounted(() => {
             </div>
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
-        {{act.display_type}}
+
         <div v-if="act.display_type=== 'ActSingle' || act.display_type=== 'ActBig'" class="absolute flex flex-col bottom-0 left-0 rounded-lg m-4 overflow-hidden">
             <div class="bg-white p-4 w-60 rounded-t-lg">
                 <img src="/assets/images/logo.svg">
