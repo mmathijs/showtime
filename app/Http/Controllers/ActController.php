@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\Countdown;
 use App\Events\UpdateAct;
+use App\Events\UpdateAllActs;
 use App\Models\Act;
 use App\Models\Day;
 use Illuminate\Support\Facades\Log;
@@ -49,6 +50,8 @@ class ActController extends Controller
 
             $day->current = true;
             $day->save();
+
+            $this->updateAll();
         }
 
         event(new UpdateAct($act));
@@ -108,5 +111,23 @@ class ActController extends Controller
         sleep(4);
 
         event(new Countdown(0, false));
+    }
+
+    public function updateAll()
+    {
+        if (!auth()->user()->hasPermissionTo('dashboard')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $args = new UpdateAllActs(
+            Act::query()->where('current', true)->first(),
+            Act::all(),
+            Day::query()->where('current', true)->first(),
+            Day::all()
+        );
+
+        event($args);
+
+        return response()->json(['message' => 'All acts updated'], 200);
     }
 }

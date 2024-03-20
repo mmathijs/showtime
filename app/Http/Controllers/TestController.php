@@ -40,22 +40,4 @@ class TestController extends Controller
 
         return 'test';
     }
-
-    public function updateAll()
-    {
-        if (!auth()->user()->hasPermissionTo('dashboard')) {
-            return response()->json(['message' => 'Unauthorized'], 401);
-        }
-
-        $args = new UpdateAllActs(
-            Act::query()->where('current', true)->first(),
-            Act::all(),
-            Day::query()->where('current', true)->first(),
-            Day::all()
-        );
-
-        event($args);
-
-        return response()->json(['message' => 'All acts updated'], 200);
-    }
 }
