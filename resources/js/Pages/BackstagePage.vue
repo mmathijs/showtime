@@ -24,6 +24,7 @@ const props = defineProps({
 const currentAct = ref(props.currentAct);
 
 const dayIdRef = ref(props.dayId);
+const dayRef = ref(props.day);
 
 const actsByDay = ref({});
 const actsToShow = ref([]);
@@ -91,6 +92,7 @@ onMounted(() => {
         currentAct.value = e.currentAct;
 
         dayIdRef.value = e.currentDay.id;
+        dayRef.value = e.currentDay;
 
         actsByDay.value = {};
 
@@ -150,7 +152,10 @@ function scroll() {
 <template>
     <div style="padding: 2rem;"
          class="h-screen w-screen flex flex-col backstageScreen bg-gray-100 dark:bg-gray-800 dark:text-white">
-        <h1 class="text-5xl font-bold mb-4 flex-none">Backstage</h1>
+        <div class="flex w-full pb-4">
+            <h1 class="text-4xl font-bold my-auto">Backstage</h1>
+            <h2 class="text-3xl ml-auto my-auto">{{ dayRef.name }}</h2>
+        </div>
         <div class=" rounded-xl h-full grid w-full gap-4"
              style="grid-template-columns: repeat(9, minmax(0, 1fr));">
             <div style="grid-column: 1/ span 2; padding: 1rem; "

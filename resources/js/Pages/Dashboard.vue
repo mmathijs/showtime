@@ -40,6 +40,10 @@ for (let i = 0; i < props.acts.length; i++) {
     actsByDay.value[day].push(act);
 }
 
+actsByDay.value[currentDay.value].sort((a, b) => {
+    return a.start_time.localeCompare(b.start_time);
+});
+
 const days = Object.keys(actsByDay.value);
 
 for (let i = 0; i < days.length; i++) {
@@ -77,6 +81,10 @@ onMounted(() => {
 
                 actsByDay.value[day].push(act);
             }
+
+            actsByDay.value[currentDay.value].sort((a, b) => {
+                return a.start_time.localeCompare(b.start_time);
+            });
 
             currentDay.value = e.allDays.find((day) => {
                 console.log(day);
