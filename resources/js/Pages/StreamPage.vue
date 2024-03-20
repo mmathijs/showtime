@@ -66,8 +66,8 @@ onMounted(() => {
                     <!--            <img src="/assets/images/download.png" width="150">-->
                 </div>
                 <div style="max-width: 1000px" class="text-center my-auto mx-auto gap-1 flex flex-col text-white">
-                    <h2 class="text-4xl text-gray-300 font-bold">{{ currentAct.type }}</h2>
-                    <h1 class="text-6xl font-semibold" v-html="currentAct.name"></h1>
+                    <h2 class="text-4xl text-gray-300 font-bold">{{ act.type }}</h2>
+                    <h1 class="text-6xl font-semibold" v-html="act.name"></h1>
                     <p class="text-4xl my-4 font-semibold">Vanwege privacy redenen is deze act niet live te volgen</p>
                 </div>
 
