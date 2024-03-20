@@ -25,6 +25,8 @@ onMounted(() => {
         })
         .listen('Countdown', (e) => {
             console.log(e);
+        }).listen('UpdateAllActs', (e) => {
+            currentAct.value = e.currentAct;
         });
 });
 
