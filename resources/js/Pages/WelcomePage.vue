@@ -154,9 +154,10 @@ function scroll() {
 
 
 <template>
-    <div class="h-screen w-screen flex flex-col backstageScreen bg-gray-100 dark:bg-gray-800 dark:text-white lg:p-4 p-2">
+    <div
+        class="h-screen w-screen flex flex-col backstageScreen bg-gray-100 dark:bg-gray-800 dark:text-white lg:p-4 p-2">
         <div class="flex w-full pb-4 px-2 h-6 overflow-hidden">
-            <h1 class="text-4xl font-bold my-auto truncate">{{title}}</h1>
+            <h1 class="text-4xl font-bold my-auto truncate">{{ title }}</h1>
             <h2 class="text-3xl ml-auto my-auto flex-none">{{ dayRef.name }}</h2>
         </div>
         <div class="rounded-xl h-full w-full"
@@ -170,12 +171,23 @@ function scroll() {
                     <div v-for="act in actsByDay[dayIdRef]" ref="vfortje" :id.attr="act.id" :key="act.id"
                          class="mb-2 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg w-full"
                          :style="{'background-color': act.id === currentAct.id ? 'rgba(60,255,234,0.53)' : ''}">
-                        <p class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">{{ act.type }}</p>
-                        <div class="flex justify-between gap-4">
+                        <p v-if="!act.hidden" class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">
+                            {{ act.type }}</p>
+                        <div class="flex justify-between gap-4" v-if="!act.hidden">
                             <h3 class="text-2xl font-bold truncate">{{ act.name.replace('<br>', ' & ') }}</h3>
                             <h3 class="text-2xl font-bold">{{ act.start_time.substring(0, 5) }}</h3>
                         </div>
-                        <p class="text-xl truncate text-gray-700 dark:text-gray-300" v-if="act.display_type !== 'Pauze'">{{ act.people }}</p>
+                        <p class="text-xl truncate text-gray-700 dark:text-gray-300"
+                           v-if="act.display_type !== 'Pauze' && !act.hidden">{{ act.people }}</p>
+                        <div v-else class="flex w-full justify-between gap-4">
+                            <div>
+                                <p class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">{{ act.type }}</p>
+                                <h3 class="text-2xl font-bold text-red-400">
+                                    De naam en deelnemer(s) van deze act zijn verborgen
+                                </h3>
+                            </div>
+                            <h3 class="text-2xl font-bold my-auto">{{ act.start_time.substring(0, 5) }}</h3>
+                        </div>
                     </div>
                 </div>
             </div>
