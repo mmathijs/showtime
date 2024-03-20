@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Events\Countdown;
 use App\Events\UpdateAct;
+use App\Events\UpdateAllActs;
+use App\Models\Act;
+use App\Models\Day;
 
 class TestController extends Controller
 {
@@ -50,5 +53,23 @@ class TestController extends Controller
 
         event(new UpdateAct(['title' => $act]));
         return 'test';
+    }
+
+    public function updateAll()
+    {
+        if (!auth()->user()->hasPermissionTo('dashboard')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $args = new UpdateAllActs(
+            Act::query()->where('current', true)->first(),
+            Act::all(),
+            Day::query()->where('current', true)->first(),
+            Day::all()
+        );
+
+        event($args);
+
+        return response()->json(['message' => 'All acts updated'], 200);
     }
 }

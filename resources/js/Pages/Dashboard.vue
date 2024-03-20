@@ -86,6 +86,16 @@ function launchAct(act) {
             console.log(error);
         });
 }
+
+function updateAllActs() {
+    axios.post('/act/update-all')
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
 </script>
 
 <template>
@@ -190,6 +200,10 @@ function launchAct(act) {
                             </tbody>
                         </table>
                     </div>
+
+                    <button @click="updateAllActs" class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-4 py-2 rounded-b-md w-full">
+                        Update All Acts
+                    </button>
                 </div>
             </div>
         </div>

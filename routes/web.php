@@ -33,4 +33,6 @@ Route::get('/backstage', [PageController::class, 'backstage'])->middleware(['aut
 Route::post('/act/launch', [ActController::class, 'launch'])->middleware(['auth', 'verified'])->name('act.launch');
 Route::post('/act/start', [ActController::class, 'start'])->middleware(['auth', 'verified'])->name('act.start');
 
+Route::post('/act/update-all', [TestController::class, 'updateAll'])->middleware(['auth', 'verified'])->name('act.updateAll');
+
 require __DIR__ . '/auth.php';
