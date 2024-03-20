@@ -155,9 +155,9 @@ function scroll() {
 
 <template>
     <div class="h-screen w-screen flex flex-col backstageScreen bg-gray-100 dark:bg-gray-800 dark:text-white lg:p-4 p-2">
-        <div class="flex w-full pb-4 px-2">
-            <h1 class="text-4xl font-bold my-auto">{{title}}</h1>
-            <h2 class="text-3xl ml-auto my-auto">{{ dayRef.name }}</h2>
+        <div class="flex w-full pb-4 px-2 h-6 overflow-hidden">
+            <h1 class="text-4xl font-bold my-auto truncate">{{title}}</h1>
+            <h2 class="text-3xl ml-auto my-auto flex-none">{{ dayRef.name }}</h2>
         </div>
         <div class="rounded-xl h-full w-full"
              style="">
