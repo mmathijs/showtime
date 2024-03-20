@@ -168,7 +168,7 @@ function scroll() {
                          :style="{'background-color': act.id === currentAct.id ? 'rgba(60,255,234,0.53)' : ''}">
                         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">{{ act.type }}</p>
                         <div class="flex justify-between gap-4">
-                            <h3 class="text-2xl font-bold truncate">{{ act.name }}</h3>
+                            <h3 class="text-2xl font-bold truncate">{{ act.name.replace('<br>', ' & ') }}</h3>
                             <h3 class="text-2xl font-bold">{{ act.start_time.substring(0, 5) }}</h3>
                         </div>
                         <p class="text-xl truncate text-gray-700 dark:text-gray-300" v-if="act.display_type !== 'Pauze'">{{ act.people }}</p>
