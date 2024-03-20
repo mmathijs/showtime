@@ -23,6 +23,7 @@ const props = defineProps({
 
 const currentAct = ref(props.currentAct);
 
+const dayIdRef = ref(props.dayId);
 
 const actsByDay = ref({});
 const actsToShow = ref([]);
@@ -53,7 +54,7 @@ const actsView = ref(null);
 const vfortje = ref(null);
 const nextAct = ref(null);
 
-actsToShow.value = actsByDay.value[props.dayId];
+actsToShow.value = actsByDay.value[dayIdRef.value];
 
 let index = actsToShow.value.findIndex((act) => {
     return act.id === currentAct.value.id;
@@ -86,7 +87,47 @@ onMounted(() => {
             console.log(e);
             countdown.value = e.status === 'active' ? e.time : -1;
             showCountdown.value = e.status === 'active';
+        }).listen('UpdateAllActs', (e) => {
+        currentAct.value = e.currentAct;
+
+        dayIdRef.value = e.currentDay.id;
+
+        actsByDay.value = {};
+
+        for (let i = 0; i < e.allActs.length; i++) {
+            const act = e.allActs[i];
+            const day = act.day;
+
+            if (actsByDay.value[day] === undefined) {
+                actsByDay.value[day] = [];
+            }
+
+            actsByDay.value[day].push(act);
+        }
+
+        days.value = Object.keys(actsByDay.value);
+
+        for (let i = 0; i < days.value.length; i++) {
+            const day = days.value[i];
+            actsByDay.value[day].sort((a, b) => {
+                return a.start_time.localeCompare(b.start_time);
+            });
+        }
+
+        actsToShow.value = actsByDay.value[dayIdRef.value];
+
+        let index = actsToShow.value.findIndex((act) => {
+            return act.id === currentAct.value.id;
         });
+
+        if (index !== -1) {
+            nextAct.value = actsToShow.value[index + 1];
+        }
+
+
+
+        scroll();
+    });
 
     scroll()
 });
@@ -118,7 +159,7 @@ function scroll() {
                 <div class="bg-white dark:bg-gray-900 rounded-xl pr-4 flex flex-col gap-4 overflow-y-auto"
                      style="height: 100vh"
                      ref="actsView">
-                    <div v-for="act in actsByDay[dayId]" ref="vfortje" :id.attr="act.id" :key="act.id"
+                    <div v-for="act in actsByDay[dayIdRef]" ref="vfortje" :id.attr="act.id" :key="act.id"
                          class="mb-2 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"
                          :style="{'background-color': act.id === currentAct.id ? 'rgba(60,255,234,0.53)' : ''}">
                         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">{{ act.type }}</p>
@@ -135,7 +176,8 @@ function scroll() {
                 <div class="grid gap-4 h-full overflow-hidden" :class="nextAct?'grid-rows-2':''">
                     <div class="rounded-xl flex flex-col bg-white dark:bg-gray-900 p-4">
                         <div class="flex justify-between w-full overflow-hidden ">
-                            <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Current Act: <h2 class="ml-4 truncate">
+                            <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Current Act: <h2
+                                class="ml-4 truncate">
                                 {{ currentAct.name }}</h2></div>
                             <h3 class="text-2xl font-bold flex-none">{{ currentAct.type }}</h3>
                         </div>

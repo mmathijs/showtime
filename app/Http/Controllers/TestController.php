@@ -41,20 +41,6 @@ class TestController extends Controller
         return 'test';
     }
 
-    public function updateAct()
-    {
-        $query = request()->query();
-
-        $act = $query['act'];
-
-        if (!$act) {
-            $act = 'Act 2';
-        }
-
-        event(new UpdateAct(['title' => $act]));
-        return 'test';
-    }
-
     public function updateAll()
     {
         if (!auth()->user()->hasPermissionTo('dashboard')) {
