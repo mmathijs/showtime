@@ -79,6 +79,7 @@ class PageController extends Controller
             'acts' => Act::all(),
             'day' => Day::query()->where('current', true)->first(),
             'dayId' => Day::query()->where('current', true)->first()['id'],
+            'title' => env('APP_TITLE') ?? 'Welcome',
         ]);
     }
 }
