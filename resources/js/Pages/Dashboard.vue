@@ -59,7 +59,31 @@ onMounted(() => {
         })
         .listen('Countdown', (e) => {
             console.log(e);
-        });
+        }).listen('UpdateAllActs', (e) => {
+            currentAct.value = e.currentAct;
+            // props.acts = e.allActs;
+            // props.eventDays = e.allDays;
+            days.value = Object.keys(actsByDay.value);
+
+            actsByDay.value = {};
+
+            for (let i = 0; i < e.allActs.length; i++) {
+                const act = e.allActs[i];
+                const day = act.day;
+
+                if (actsByDay.value[day] === undefined) {
+                    actsByDay.value[day] = [];
+                }
+
+                actsByDay.value[day].push(act);
+            }
+
+            currentDay.value = e.allDays.find((day) => {
+                console.log(day);
+                return day.current;
+            }).id;
+        })
+    ;
 });
 
 function launchAct(act) {
