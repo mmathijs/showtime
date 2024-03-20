@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\Countdown;
 use App\Events\UpdateAct;
 use App\Models\Act;
+use App\Models\Day;
 use Illuminate\Support\Facades\Log;
 
 class ActController extends Controller
@@ -34,6 +35,21 @@ class ActController extends Controller
 
         $act->current = true;
         $act->save();
+
+        $day = $act->day;
+
+        if (Day::query()->where('id', $day)->where('current', true)->count() === 0) {
+            Day::query()->where('current', true)->update(['current' => false]);
+
+            $day = Day::query()->where('id', $day)->first();
+
+            if (!$day) {
+                return response()->json(['message' => 'Day not found'], 404);
+            }
+
+            $day->current = true;
+            $day->save();
+        }
 
         event(new UpdateAct($act));
 

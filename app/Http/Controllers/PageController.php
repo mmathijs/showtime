@@ -36,10 +36,13 @@ class PageController extends Controller
             return redirect()->route('welcome');
         }
 
+        $day = Day::query()->where('current', true)->first();
+
         return Inertia::render('BackstagePage', [
             'currentAct' => Act::query()->where('current', true)->first(),
             'acts' => Act::all(),
-            'day' => '1'
+            'dayId' => $day['id'],
+            'day' => $day,
         ]);
     }
 

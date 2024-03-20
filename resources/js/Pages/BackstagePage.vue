@@ -11,8 +11,12 @@ const props = defineProps({
         type: Array,
         required: true
     },
+    dayId: {
+        type: Number,
+        required: true
+    },
     day: {
-        type: String,
+        type: Object,
         required: true
     }
 });
@@ -49,7 +53,7 @@ const actsView = ref(null);
 const vfortje = ref(null);
 const nextAct = ref(null);
 
-actsToShow.value = actsByDay.value[props.day];
+actsToShow.value = actsByDay.value[props.dayId];
 
 let index = actsToShow.value.findIndex((act) => {
     return act.id === currentAct.value.id;
@@ -114,7 +118,7 @@ function scroll() {
                 <div class="bg-white dark:bg-gray-900 rounded-xl pr-4 flex flex-col gap-4 overflow-y-auto"
                      style="height: 100vh"
                      ref="actsView">
-                    <div v-for="act in actsByDay[day]" ref="vfortje" :id.attr="act.id" :key="act.id"
+                    <div v-for="act in actsByDay[dayId]" ref="vfortje" :id.attr="act.id" :key="act.id"
                          class="mb-2 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg"
                          :style="{'background-color': act.id === currentAct.id ? 'rgba(60,255,234,0.53)' : ''}">
                         <p class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">{{ act.type }}</p>
