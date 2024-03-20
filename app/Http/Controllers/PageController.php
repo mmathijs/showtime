@@ -67,8 +67,7 @@ class PageController extends Controller
 
         $allowedIps = config('app.allowed_ips');
 
-        if ($allowedIps !== '*' && !in_array($ip, explode(',', $allowedIps)) &&
-            !auth()->user()->hasPermissionTo('acts')) {
+        if (!($allowedIps === '*' || in_array($ip, explode(',', $allowedIps)) || (auth()->user() && auth()->user()->hasPermissionTo('acts')))) {
             return response('Unauthorized', 401);
         }
 
