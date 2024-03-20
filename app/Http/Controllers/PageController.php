@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Act;
 use App\Models\Day;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class PageController extends Controller
@@ -56,6 +57,28 @@ class PageController extends Controller
             'acts' => Act::all(),
             'currentAct' => Act::query()->where('current', true)->first(),
             'eventDays' => Day::all(),
+        ]);
+    }
+
+    public function home()
+    {
+        // get IP address of client
+        $ip = request()->ip();
+
+        $allowedIps = config('app.allowed_ips');
+
+        if ($allowedIps !== '*' && !in_array($ip, explode(',', $allowedIps)) &&
+            !auth()->user()->hasPermissionTo('acts')) {
+            return response('Unauthorized', 401);
+        }
+
+        Log::debug('IP address: ' . $ip);
+
+        return Inertia::render('WelcomePage', [
+            'currentAct' => Act::query()->where('current', true)->first(),
+            'acts' => Act::all(),
+            'day' => Day::query()->where('current', true)->first(),
+            'dayId' => Day::query()->where('current', true)->first()['id'],
         ]);
     }
 }
