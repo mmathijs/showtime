@@ -159,8 +159,9 @@ function launchAct(act) {
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <button
                                         @click="launchAct(act)"
-                                        class="text-white hover:bg-indigo-700 dark:hover:bg-indigo-600 px-4 py-2 rounded-md w-full"
-                                        :class="act.id === currentAct.id ? 'bg-green-200  dark:bg-green-500' : 'bg-indigo-600  dark:bg-indigo-500'"
+                                        class="text-white  px-4 py-2 rounded-md w-full"
+                                        :class="act.id === currentAct.id ? 'bg-green-200  dark:bg-green-500 hover:bg-green-300 dark:hover:bg-green-600' :
+                                        'bg-indigo-600  dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600'"
                                     >
                                         {{ act.id === currentAct.id ? 'Start' : 'Launch' }}
                                     </button>
