@@ -16,7 +16,6 @@ return new class extends Migration
     {
         Schema::create('days', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('day')->unsigned();
             $table->string('name');
             $table->date('date');
             $table->boolean('current')->default(false);
@@ -26,11 +25,11 @@ return new class extends Migration
         $acts = Act::all();
 
         foreach ($acts as $act) {
-            $day = Day::query()->where('day', $act->day)->first();
+            $day = Day::query()->where('id', $act->day)->first();
 
             if (!$day) {
                 $day = new Day();
-                $day->day = $act->day;
+                $day->id = $act->day;
                 $day->name = 'Day ' . $act->day;
                 $day->date = '2021-01-01';
 
@@ -40,7 +39,7 @@ return new class extends Migration
 
         // add foreign key to acts table to the exising day row
         Schema::table('acts', function (Blueprint $table) {
-            $table->foreign('day')->references('day')->on('days');
+            $table->foreign('day')->references('id')->on('days');
         });
     }
 

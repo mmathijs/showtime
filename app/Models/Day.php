@@ -11,5 +11,5 @@ class Day extends Model
 
     protected $table = 'days';
     protected $guarded = [];
-    protected $fillable = ['name', 'date'];
+    protected $fillable = ['name', 'date', 'day_id', 'current'];
 }
