@@ -45,23 +45,40 @@ onMounted(() => {
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
 
-        <div v-if="act.display_type=== 'ActSingle' || act.display_type=== 'ActBig'" class="absolute flex flex-col bottom-0 left-0 rounded-lg m-4 overflow-hidden">
-            <div class="bg-white p-4 w-60 rounded-t-lg">
-                <img src="/assets/images/logo.svg">
+        <div v-if="act.display_type=== 'ActSingle' || act.display_type=== 'ActBig'"
+             class="absolute flex flex-col bottom-0 left-0 rounded-lg overflow-hidden w-screen h-screen">
+            <div v-if="!act.hidden" class="m-4 absolute bottom-0">
+                <div class="bg-white p-4 w-60 rounded-t-lg">
+                    <img src="/assets/images/logo.svg">
+                </div>
+                <div
+                    class="bg-blue-800 h-24 p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
+                    style="width: 600px; text-align: right">
+                    {{ act.type }}
+                    <p></p>
+                </div>
             </div>
-            <div
-                class="bg-blue-800 h-24 p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
-                style="width: 600px; text-align: right">
-                {{ act.type }}
-                <p></p>
+            <div v-else
+                 class="w-screen h-screen absolute bg-blue-900 flex flex-col flex-wrap items-center justify-center">
+                >
+                <div class="absolute top-0 left-0 bg-white p-4 m-4 rounded-lg overflow-hidden">
+                    <img src="/assets/images/logo.svg" width="250">
+                    <!--            <img src="/assets/images/download.png" width="150">-->
+                </div>
+                <div style="max-width: 1000px" class="text-center my-auto mx-auto gap-1 flex flex-col text-white">
+                    <h2 class="text-4xl text-gray-300 font-bold">{{ currentAct.type }}</h2>
+                    <h1 class="text-6xl font-semibold" v-html="currentAct.name"></h1>
+                    <p class="text-4xl my-4 font-semibold">Vanwege privacy redenen is deze act niet live te volgen</p>
+                </div>
+
             </div>
         </div>
         <div v-else-if="act.display_type==='Pauze'"
              class="w-screen h-screen absolute bg-blue-900 flex flex-col flex-wrap items-center justify-center">
-                    <div class="absolute top-0 left-0 bg-white p-4 m-4 rounded-lg overflow-hidden">
-                        <img src="/assets/images/logo.svg" width="250">
-            <!--            <img src="/assets/images/download.png" width="150">-->
-                    </div>
+            <div class="absolute top-0 left-0 bg-white p-4 m-4 rounded-lg overflow-hidden">
+                <img src="/assets/images/logo.svg" width="250">
+                <!--            <img src="/assets/images/download.png" width="150">-->
+            </div>
             <div style="max-width: 1000px">
                 <h1 class="text-7xl font-semibold text-white text-center">{{ act.name }}</h1>
                 <h2 class="text-6xl font-semibold text-white text-center">{{ act.description }}</h2>

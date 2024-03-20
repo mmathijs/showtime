@@ -118,9 +118,10 @@ function launchAct(act) {
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
                                     Start Time
                                 </th>
+
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
-                                    Launch
+                                    Privacy
                                 </th>
                                 <th scope="col"
                                     class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap">
@@ -149,6 +150,11 @@ function launchAct(act) {
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <div class="text-sm text-gray-900 dark:text-gray-100">{{ act.start_time }}</div>
+                                </td>
+                                <!-- Show if privacy mode is enabled                                -->
+                                <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
+                                    <div v-if="act.hidden" class="text-red-600 dark:text-red-400">Hidden</div>
+                                    <div v-else class="text-green-600 dark:text-green-400">Shown</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-center text-sm font-medium">
                                     <button
