@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->string('name');
-            $table->integer('day');
+            $table->bigInteger('day')->unsigned();
             $table->time('start_time');
             $table->string('display_type');
             $table->longText('people')->nullable();

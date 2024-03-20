@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Act;
+use App\Models\Day;
 use Inertia\Inertia;
 
 class PageController extends Controller
@@ -51,6 +52,7 @@ class PageController extends Controller
         return Inertia::render('Dashboard', [
             'acts' => Act::all(),
             'currentAct' => Act::query()->where('current', true)->first(),
+            'eventDays' => Day::all(),
         ]);
     }
 }

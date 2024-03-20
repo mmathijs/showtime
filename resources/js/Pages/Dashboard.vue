@@ -4,6 +4,7 @@ import {Head} from '@inertiajs/vue3';
 import {onMounted, ref} from "vue";
 import '../echo.js';
 import AdvancementDropdown from "@/Components/AdvancementDropdown.vue";
+import DayDropdown from "@/Components/DayDropdown.vue";
 
 const props = defineProps({
     acts: {
@@ -13,10 +14,18 @@ const props = defineProps({
     currentAct: {
         type: Object,
         required: true
+    },
+    eventDays: {
+        type: Array,
+        required: true
     }
 });
 
 const currentAct = ref(props.currentAct);
+let filter = props.eventDays.filter((day) => {
+    return day.current;
+});
+const currentDay = ref(filter?.[0]?.id ?? 1);
 
 const actsByDay = ref({});
 
@@ -39,7 +48,6 @@ for (let i = 0; i < days.length; i++) {
         return a.start_time.localeCompare(b.start_time);
     });
 }
-
 
 onMounted(() => {
     window.Echo.private('act-update')
@@ -90,8 +98,12 @@ function launchAct(act) {
 
         <div class="py-12">
             <div class=" sm:px-6 lg:px-8">
+
                 <div class="bg-white dark:bg-gray-800 overflow-x-auto shadow-sm sm:rounded-lg">
-                    <!--                    <div class="p-6 font-semibold text-2xl text-gray-900 dark:text-gray-100">Acts:</div>-->
+                    <!-- A dropdown to select the day                -->
+                    <div class="flex px-8 mt-4 justify-center gap-4 w-full">
+                        <DayDropdown :days="eventDays" v-model="currentDay"/>
+                    </div>
 
                     <!-- Table with act.type, act.name, act.display_type, act.people, start_time    -->
                     <div class="p-6 pb-20">
@@ -130,7 +142,7 @@ function launchAct(act) {
                             </tr>
                             </thead>
                             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                            <tr v-for="act in actsByDay['1']" :key="act.id"
+                            <tr v-for="act in actsByDay[currentDay]" :key="act.id"
                                 class="border-b-2 border-gray-600 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700"
                                 :style="{'background-color': act.id === currentAct.id ? 'rgba(180,205,255,0.12)' : ''}">
                                 <!-- Highlight the current act -->
