@@ -40,7 +40,7 @@ return new class extends Migration
 
         // add foreign key to acts table to the exising day row
         Schema::table('acts', function (Blueprint $table) {
-            $table->foreign('day')->references('id')->on('days');
+            $table->foreign('day')->references('day')->on('days');
         });
     }
 
