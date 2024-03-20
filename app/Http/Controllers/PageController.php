@@ -78,6 +78,7 @@ class PageController extends Controller
             'acts' => Act::all(),
             'day' => Day::query()->where('current', true)->first(),
             'dayId' => Day::query()->where('current', true)->first()['id'],
+            'permissionTo' => auth()->user() ? auth()->user()->hasPermissionTo('acts') : false,
             'title' => env('APP_TITLE') ?? 'Welcome',
         ]);
     }

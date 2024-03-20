@@ -22,6 +22,9 @@ const props = defineProps({
     title: {
         type: String,
         required: true
+    },
+    permissionTo: {
+        type: Boolean,
     }
 });
 
@@ -171,15 +174,16 @@ function scroll() {
                     <div v-for="act in actsByDay[dayIdRef]" ref="vfortje" :id.attr="act.id" :key="act.id"
                          class="mb-2 bg-gray-100 dark:bg-gray-800 p-4 rounded-lg w-full"
                          :style="{'background-color': act.id === currentAct.id ? 'rgba(60,255,234,0.53)' : ''}">
-                        <p v-if="!act.hidden" class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">
+                        <p v-if="!act.hidden || permissionTo"
+                           class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">
                             {{ act.type }}</p>
-                        <div class="flex justify-between gap-4" v-if="!act.hidden">
+                        <div class="flex justify-between gap-4" v-if="!act.hidden  || permissionTo">
                             <h3 class="text-2xl font-bold truncate">{{ act.name.replace('<br>', ' & ') }}</h3>
                             <h3 class="text-2xl font-bold">{{ act.start_time.substring(0, 5) }}</h3>
                         </div>
                         <p class="text-xl truncate text-gray-700 dark:text-gray-300"
-                           v-if="act.display_type !== 'Pauze' && !act.hidden">{{ act.people }}</p>
-                        <div v-else class="flex w-full justify-between gap-4">
+                           v-if="act.display_type !== 'Pauze' && (!act.hidden || permissionTo)">{{ act.people }}</p>
+                        <div v-if="act.hidden && !permissionTo" class="flex w-full justify-between gap-4">
                             <div>
                                 <p class="text-lg font-bold text-gray-700 dark:text-gray-300 -mb-2">{{ act.type }}</p>
                                 <h3 class="text-2xl font-bold text-red-400">
