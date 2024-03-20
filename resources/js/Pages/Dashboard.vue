@@ -64,7 +64,6 @@ onMounted(() => {
         .listen('Countdown', (e) => {
             console.log(e);
         }).listen('UpdateAllActs', (e) => {
-            currentAct.value = e.currentAct;
             // props.acts = e.allActs;
             // props.eventDays = e.allDays;
             days.value = Object.keys(actsByDay.value);
@@ -90,6 +89,8 @@ onMounted(() => {
                 console.log(day);
                 return day.current;
             }).id;
+
+            currentAct.value = e.currentAct;
         })
     ;
 });

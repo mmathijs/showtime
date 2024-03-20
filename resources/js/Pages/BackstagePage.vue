@@ -192,8 +192,11 @@ function scroll() {
                             <!-- Material Required area                            -->
                             <div class="pt-4 mt-3 border-t-2">
                                 <h3 class="text-3xl font-bold">Material Required</h3>
-                                <div v-for="material in currentAct.material_required.split(',')" :key="material">
+                                <div v-if="currentAct.material_required" v-for="material in currentAct.material_required.split(',')" :key="material">
                                     <h3 class="text-2xl ml-2">- {{ material }}</h3>
+                                </div>
+                                <div v-else>
+                                    <h3 class="text-2xl ml-2">- No material required</h3>
                                 </div>
                             </div>
                         </div>
