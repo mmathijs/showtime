@@ -130,4 +130,51 @@ class ActController extends Controller
 
         return response()->json(['message' => 'All acts updated'], 200);
     }
+
+    public function update($act)
+    {
+        if (!auth()->user()->hasPermissionTo('dashboard')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $postData = request()->validate([
+            'name' => 'required|string',
+            'type' => 'required|string',
+            'display_type' => 'required|string',
+            'start_time' => 'required|string',
+            'people' => 'required|string',
+            'description' => 'nullable|string',
+            'material_required' => 'nullable|string',
+            'hidden' => 'required|boolean',
+            'day' => 'required|integer',
+        ]);
+
+        $actDB = Act::query()->where('id', $act)->first();
+
+        if (!$actDB) {
+            return response()->json(['message' => 'Act not found'], 404);
+        }
+
+        $actBeforeUpdate = $actDB->toArray();
+
+        $actDB->name = $postData['name'];
+        $actDB->type = $postData['type'];
+        $actDB->display_type = $postData['display_type'];
+        $actDB->start_time = $postData['start_time'];
+        $actDB->people = $postData['people'];
+        $actDB->description = $postData['description'];
+        $actDB->material_required = $postData['material_required'];
+        $actDB->hidden = $postData['hidden'];
+        $actDB->day = $postData['day'];
+
+        $actDB->save();
+
+        $actAfterUpdate = $actDB->toArray();
+
+        if ($actBeforeUpdate !== $actAfterUpdate) {
+            $this->updateAll();
+        }
+
+        return $act;
+    }
 }

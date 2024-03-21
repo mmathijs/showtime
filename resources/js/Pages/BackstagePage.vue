@@ -18,6 +18,11 @@ const props = defineProps({
     day: {
         type: Object,
         required: true
+    },
+    showDescription: {
+        type: Boolean,
+        required: false,
+        default: false
     }
 });
 
@@ -127,7 +132,6 @@ onMounted(() => {
         }
 
 
-
         scroll();
     });
 
@@ -178,8 +182,10 @@ function scroll() {
             </div>
             <div style="grid-column: 3 / span 7; padding: 0;">
                 <!-- A grid with 2 columns in one the current act and in the other one the next act                    -->
-                <div class="grid gap-4 h-full overflow-hidden" :class="nextAct?'grid-rows-2':''">
-                    <div class="rounded-xl flex flex-col bg-white dark:bg-gray-900 p-4">
+                <div class="grid gap-4 h-full overflow-hidden"
+                     :class="nextAct?currentAct.description && showDescription?'grid-rows-5':'grid-rows-2':''">
+                    <div class="rounded-xl flex flex-col bg-white dark:bg-gray-900 p-4"
+                         :style="currentAct.description && showDescription?'grid-row: 1 / span 3': ''">
                         <div class="flex justify-between w-full overflow-hidden ">
                             <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Current Act: <h2
                                 class="ml-4 truncate">
@@ -192,16 +198,25 @@ function scroll() {
                             <!-- Material Required area                            -->
                             <div class="pt-4 mt-3 border-t-2">
                                 <h3 class="text-3xl font-bold">Material Required</h3>
-                                <div v-if="currentAct.material_required !== null && currentAct.material_required !== undefined && currentAct.material_required !== ''">
-                                    <h3 class="text-2xl ml-2" v-for="material in currentAct.material_required.split(',')" :key="material">- {{ material }}</h3>
+                                <div
+                                    v-if="currentAct.material_required !== null && currentAct.material_required !== undefined && currentAct.material_required !== ''">
+                                    <h3 class="text-2xl ml-2"
+                                        v-for="material in currentAct.material_required.split(',')" :key="material">-
+                                        {{ material }}</h3>
                                 </div>
                                 <div v-else>
                                     <h3 class="text-2xl ml-2 text-gray-700">No material required</h3>
                                 </div>
                             </div>
+                            <div v-if="currentAct.description && showDescription" class="pt-4 mt-3 border-t-2">
+                                <h3 class="text-3xl font-bold">Description</h3>
+                                <p class="text-2xl ml-2 text-gray-700 dark:text-gray-300"
+                                   v-html="currentAct.description.replace('\n', '<br>')"></p>
+                            </div>
                         </div>
                     </div>
-                    <div v-if="nextAct" class="bg-white dark:bg-gray-900 rounded-xl p-4 flex flex-col">
+                    <div v-if="nextAct" class="bg-white dark:bg-gray-900 rounded-xl p-4 flex flex-col"
+                         :style="currentAct.description && showDescription?'grid-row: 4 / span 2': ''">
                         <div class="flex justify-between w-full overflow-hidden ">
                             <div class="text-3xl font-bold mb-4 mr-4 flex truncate">Next Act: <h2 class="ml-4 truncate">
                                 {{ nextAct.name }}</h2></div>
@@ -213,8 +228,10 @@ function scroll() {
                             <!-- Material Required area                            -->
                             <div class="pt-4 mt-3 border-t-2">
                                 <h3 class="text-3xl font-bold">Material Required</h3>
-                                <div v-if="nextAct.material_required !== null && nextAct.material_required !== undefined && nextAct.material_required !== ''">
-                                    <h3 class="text-2xl ml-2" v-for="material in nextAct.material_required.split(',')" :key="material">- {{ material }}</h3>
+                                <div
+                                    v-if="nextAct.material_required !== null && nextAct.material_required !== undefined && nextAct.material_required !== ''">
+                                    <h3 class="text-2xl ml-2" v-for="material in nextAct.material_required.split(',')"
+                                        :key="material">- {{ material }}</h3>
                                 </div>
                                 <div v-else>
                                     <h3 class="text-2xl ml-2 text-gray-700">No material required</h3>

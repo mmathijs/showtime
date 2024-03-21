@@ -76,14 +76,14 @@ onMounted(() => {
 
             </div>
         </div>
-        <div v-else-if="act.display_type==='Pauze'"
+        <div v-else-if="act.display_type==='Pauze'|| act.display_type==='Inloop'"
              class="w-screen h-screen absolute bg-blue-900 flex flex-col flex-wrap items-center justify-center">
             <div class="absolute top-0 left-0 bg-white p-4 m-4 rounded-lg overflow-hidden">
                 <img src="/assets/images/logo.svg" width="250">
                 <!--            <img src="/assets/images/download.png" width="150">-->
             </div>
             <div style="max-width: 1000px">
-                <h1 class="text-7xl font-semibold text-white text-center">{{ act.name }}</h1>
+                <h1 class="text-7xl font-semibold text-white text-center" v-if="act.display_type!=='Inloop'">{{ act.name }}</h1>
                 <h2 class="text-6xl font-semibold text-white text-center">{{ act.description }}</h2>
             </div>
         </div>

@@ -44,6 +44,7 @@ class PageController extends Controller
             'acts' => Act::all(),
             'dayId' => $day['id'],
             'day' => $day,
+            'showDescription' => request()->showDescription ?? false,
         ]);
     }
 
@@ -94,6 +95,23 @@ class PageController extends Controller
             'dayId' => Day::query()->where('current', true)->first()['id'],
             'permissionTo' => auth()->user() ? auth()->user()->hasPermissionTo('acts') : false,
             'title' => env('APP_TITLE') ?? 'Welcome',
+        ]);
+    }
+
+    public function editAct($id)
+    {
+        if (!auth()->user()->hasPermissionTo('dashboard')) {
+            return redirect()->route('welcome');
+        }
+
+        $act = Act::query()->find($id);
+
+        if (!$act) {
+            return redirect()->route('dashboard');
+        }
+
+        return Inertia::render('EditActPage', [
+            'act' => $act,
         ]);
     }
 }

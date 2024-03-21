@@ -25,6 +25,8 @@ Route::get('/backstage', [PageController::class, 'backstage'])->middleware(['aut
 
 Route::post('/act/launch', [ActController::class, 'launch'])->middleware(['auth', 'verified'])->name('act.launch');
 Route::post('/act/start', [ActController::class, 'start'])->middleware(['auth', 'verified'])->name('act.start');
+Route::get('/act/{act}/edit', [PageController::class, 'editAct'])->middleware(['auth', 'verified'])->name('act.edit');
+Route::put('/act/{act}', [ActController::class, 'update'])->middleware(['auth', 'verified'])->name('act.update');
 
 Route::post('/act/update-all', [ActController::class, 'updateAll'])->middleware(['auth', 'verified'])->name('act.updateAll');
 

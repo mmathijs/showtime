@@ -1,6 +1,6 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import {Head} from '@inertiajs/vue3';
+import {Head, router} from '@inertiajs/vue3';
 import {onMounted, ref} from "vue";
 import '../echo.js';
 import AdvancementDropdown from "@/Components/AdvancementDropdown.vue";
@@ -129,6 +129,7 @@ function updateAllActs() {
             console.log(error);
         });
 }
+
 </script>
 
 <template>
@@ -222,12 +223,12 @@ function updateAllActs() {
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                    <button
-                                        @click="editAct(act)"
+                                    <a
+                                        :href="route('act.edit', act.id)"
                                         class="text-indigo-600 dark:text-indigo-400 hover:text-indigo-900 dark:hover:text-indigo-600"
                                     >
                                         Edit
-                                    </button>
+                                    </a>
                                 </td>
                             </tr>
                             </tbody>

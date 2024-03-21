@@ -58,6 +58,10 @@ onMounted(() => {
                 <h1 class="text-7xl font-semibold">{{ currentAct.name }}</h1>
                 <h2 class="text-6xl font-semibold">{{ currentAct.description }}</h2>
             </div>
+            <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px"
+                 v-else-if="currentAct.display_type==='Inloop'">
+                <h2 class="text-6xl font-semibold">{{ currentAct.description }}</h2>
+            </div>
             <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
                 <h2 class="text-4xl -mb-2 text-gray-300 font-bold">{{ currentAct.type }}</h2>
                 <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
