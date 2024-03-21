@@ -223,7 +223,7 @@ function scroll() {
                             <h3 class="text-2xl font-bold flex-none">{{ nextAct.type }}</h3>
                         </div>
                         <div class="">
-                            <p class="text-xl truncate text-gray-700 dark:text-gray-300">{{ nextAct.people }}</p>
+                            <p class="text-xl text-gray-700 dark:text-gray-300">{{ nextAct.people }}</p>
 
                             <!-- Material Required area                            -->
                             <div class="pt-4 mt-3 border-t-2">
