@@ -70,6 +70,17 @@ class PageController extends Controller
         Log::debug('Allowed IPs: ' . $allowedIps);
         Log::debug('IP address: ' . $ip);
 
+        if ( isset( $_SERVER['HTTP_X_FORWARDED_FOR'] ) ) {
+            $http_x_headers = explode( ',', $_SERVER['HTTP_X_FORWARDED_FOR'] );
+
+            Log::debug('HTTP_X_FORWARDED_FOR: ' . $_SERVER['HTTP_X_FORWARDED_FOR']);
+
+            $_SERVER['REMOTE_ADDR'] = $http_x_headers[0];
+        }
+
+        $ip = $_SERVER['REMOTE_ADDR'];
+        Log::debug('REMOTE_ADDR: ' . $_SERVER['REMOTE_ADDR']);
+
         if ($allowedIps !== '*' && !in_array($ip, explode(',', $allowedIps)) && !(auth()->user() && auth()->user()->hasPermissionTo('acts'))) {
             return response('Unauthorized', 401);
         }
