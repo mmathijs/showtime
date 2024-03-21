@@ -47,6 +47,7 @@ onMounted(() => {
             <div class="text-center my-auto mx-auto gap-1 flex flex-col" v-if="currentAct.display_type=== 'ActSingle'">
                 <h2 class="text-4xl text-gray-300 font-bold">{{ currentAct.type }}</h2>
                 <h1 class="text-7xl font-semibold leading-none" v-html="currentAct.name"></h1>
+                {{currentAct.people + ' ' + currentAct.name + currentAct.name.toString().trimStart().trimEnd() === currentAct.people.toString().trimStart().trimEnd() }}
                 <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{ currentAct.people }}</p>
             </div>
 
