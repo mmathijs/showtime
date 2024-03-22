@@ -130,9 +130,9 @@ class ActController extends Controller
     {
         return [
             'currentAct' => Act::query()->where('current', true)->first(),
-            'acts' => Act::all(),
+            'allActs' => Act::all(),
             'currentDay' => Day::query()->where('current', true)->first(),
-            'days' => Day::all()
+            'allDays' => Day::all()
         ];
     }
 
