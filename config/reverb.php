@@ -35,6 +35,7 @@ return [
             'options' => [
                 'tls' => [],
             ],
+            'max_request_size' => 10485760, // 10MB
             'scaling' => [
                 'enabled' => env('REVERB_SCALING_ENABLED', false),
                 'channel' => env('REVERB_SCALING_CHANNEL', 'reverb'),
