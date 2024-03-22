@@ -119,16 +119,21 @@ class ActController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
 
-        $args = new UpdateAllActs(
-            Act::query()->where('current', true)->first(),
-            Act::all(),
-            Day::query()->where('current', true)->first(),
-            Day::all()
-        );
+        $args = new UpdateAllActs();
 
         event($args);
 
         return response()->json(['message' => 'All acts updated'], 200);
+    }
+
+    public function updateAllGet()
+    {
+        return [
+            'currentAct' => Act::query()->where('current', true)->first(),
+            'acts' => Act::all(),
+            'currentDay' => Day::query()->where('current', true)->first(),
+            'days' => Day::all()
+        ];
     }
 
     public function update($act)

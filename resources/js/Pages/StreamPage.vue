@@ -26,7 +26,13 @@ onMounted(() => {
         })
         .listen('Countdown', (e) => {
             console.log(e);
-        }).listen('UpdateAllActs', (e) => {
+        }).listen('UpdateAllActs', async () => {
+            async function fetchUpdateAllActs() {
+                const response = await fetch('/api/acts');
+                return await response.json();
+            }
+
+            const e = await fetchUpdateAllActs();
             act.value = e.currentAct;
         }
     );
@@ -83,7 +89,9 @@ onMounted(() => {
                 <!--            <img src="/assets/images/download.png" width="150">-->
             </div>
             <div style="max-width: 1000px">
-                <h1 class="text-7xl font-semibold text-white text-center" v-if="act.display_type!=='Inloop'">{{ act.name }}</h1>
+                <h1 class="text-7xl font-semibold text-white text-center" v-if="act.display_type!=='Inloop'">{{
+                        act.name
+                    }}</h1>
                 <h2 class="text-6xl font-semibold text-white text-center">{{ act.description }}</h2>
             </div>
         </div>

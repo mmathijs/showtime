@@ -28,6 +28,8 @@ Route::post('/act/start', [ActController::class, 'start'])->middleware(['auth', 
 Route::get('/act/{act}/edit', [PageController::class, 'editAct'])->middleware(['auth', 'verified'])->name('act.edit');
 Route::put('/act/{act}', [ActController::class, 'update'])->middleware(['auth', 'verified'])->name('act.update');
 
+Route::get('/update-all', [ActController::class, 'updateAllGet'])->middleware(['auth', 'verified'])->name('act.updateAll.get');
+
 Route::post('/act/update-all', [ActController::class, 'updateAll'])->middleware(['auth', 'verified'])->name('act.updateAll');
 
 require __DIR__ . '/auth.php';

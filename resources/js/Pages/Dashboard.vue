@@ -63,35 +63,41 @@ onMounted(() => {
         })
         .listen('Countdown', (e) => {
             console.log(e);
-        }).listen('UpdateAllActs', (e) => {
-            // props.acts = e.allActs;
-            // props.eventDays = e.allDays;
-            days.value = Object.keys(actsByDay.value);
+        }).listen('UpdateAllActs', async () => {
+        async function fetchUpdateAllActs() {
+            const response = await fetch('/api/acts');
+            return await response.json();
+        }
 
-            actsByDay.value = {};
+        const e = await fetchUpdateAllActs();
+        // props.acts = e.allActs;
+        // props.eventDays = e.allDays;
+        days.value = Object.keys(actsByDay.value);
 
-            for (let i = 0; i < e.allActs.length; i++) {
-                const act = e.allActs[i];
-                const day = act.day;
+        actsByDay.value = {};
 
-                if (actsByDay.value[day] === undefined) {
-                    actsByDay.value[day] = [];
-                }
+        for (let i = 0; i < e.allActs.length; i++) {
+            const act = e.allActs[i];
+            const day = act.day;
 
-                actsByDay.value[day].push(act);
+            if (actsByDay.value[day] === undefined) {
+                actsByDay.value[day] = [];
             }
 
-            actsByDay.value[currentDay.value].sort((a, b) => {
-                return a.start_time.localeCompare(b.start_time);
-            });
+            actsByDay.value[day].push(act);
+        }
 
-            currentDay.value = e.allDays.find((day) => {
-                console.log(day);
-                return day.current;
-            }).id;
+        actsByDay.value[currentDay.value].sort((a, b) => {
+            return a.start_time.localeCompare(b.start_time);
+        });
 
-            currentAct.value = e.currentAct;
-        })
+        currentDay.value = e.allDays.find((day) => {
+            console.log(day);
+            return day.current;
+        }).id;
+
+        currentAct.value = e.currentAct;
+    })
     ;
 });
 
@@ -235,7 +241,8 @@ function updateAllActs() {
                         </table>
                     </div>
 
-                    <button @click="updateAllActs" class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-4 py-2 rounded-b-md w-full">
+                    <button @click="updateAllActs"
+                            class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-4 py-2 rounded-b-md w-full">
                         Update All Acts
                     </button>
                 </div>

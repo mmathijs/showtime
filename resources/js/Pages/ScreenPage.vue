@@ -25,9 +25,15 @@ onMounted(() => {
         })
         .listen('Countdown', (e) => {
             console.log(e);
-        }).listen('UpdateAllActs', (e) => {
-            currentAct.value = e.currentAct;
-        });
+        }).listen('UpdateAllActs', async () => {
+        async function fetchUpdateAllActs() {
+            const response = await fetch('/api/acts');
+            return await response.json();
+        }
+
+        const e = await fetchUpdateAllActs();
+        currentAct.value = e.currentAct;
+    });
 });
 
 </script>
@@ -37,7 +43,7 @@ onMounted(() => {
         <div v-if="show" class="w-screen overflow-hidden z-10 h-screen absolute top-0 left-0 animation">
             <div class="left-half absolute h-full" style="background-color: blue"></div>
             <div class="middle-logo z-40 rounded-full bg-white absolute overflow-hidden">
-<!--                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">-->
+                <!--                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">-->
                 <img class="w-full p-4 top-50 absolute" src="/assets/images/ijsingwekkend.jpg" alt="logo">
             </div>
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
@@ -49,8 +55,10 @@ onMounted(() => {
                 <h1 class=" font-semibold leading-none" v-html="currentAct.name"
                     :class="currentAct.people == currentAct.name ? 'text-8xl mb-4' : 'text-7xl'"
                 ></h1>
-<!--                {{currentAct.people + ' ' + currentAct.name}}{{currentAct.name.toString().trimStart().trimEnd() === currentAct.people.toString().trimStart().trimEnd() }}-->
-                <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{ currentAct.people }}</p>
+                <!--                {{currentAct.people + ' ' + currentAct.name}}{{currentAct.name.toString().trimStart().trimEnd() === currentAct.people.toString().trimStart().trimEnd() }}-->
+                <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{
+                        currentAct.people
+                    }}</p>
             </div>
 
             <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px"
@@ -71,7 +79,9 @@ onMounted(() => {
                         <p class="whitespace-nowrap text-center" v-for="person in currentAct.people.split(',')"
                            :key="person">{{
                                 person
-                            }}{{ currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ',' }} </p>
+                            }}{{
+                                currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ','
+                            }} </p>
                     </div>
 
                 </div>
