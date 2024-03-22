@@ -65,7 +65,7 @@ onMounted(() => {
             console.log(e);
         }).listen('UpdateAllActs', async () => {
         async function fetchUpdateAllActs() {
-            const response = await fetch('/api/acts');
+            const response = await fetch('/update-all');
             return await response.json();
         }
 
