@@ -31,6 +31,8 @@ Route::put('/act/{act}', [ActController::class, 'update'])->middleware(['auth', 
 Route::post('/act/update-winners', [ActController::class, 'updateWinners'])->middleware(['auth', 'verified'])->name('act.updateWinners');
 Route::post('/act/show-winners', [ActController::class, 'showWinners'])->middleware(['auth', 'verified'])->name('act.showWinners');
 
+Route::get('/update-all', [ActController::class, 'updateAllGet'])->middleware(['auth', 'verified'])->name('act.updateAll.get');
+
 Route::post('/act/update-all', [ActController::class, 'updateAll'])->middleware(['auth', 'verified'])->name('act.updateAll');
 
 require __DIR__ . '/auth.php';

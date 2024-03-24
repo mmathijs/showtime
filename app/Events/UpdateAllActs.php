@@ -14,23 +14,23 @@ class UpdateAllActs implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $currentAct;
-    public $allActs;
+//    public $currentAct;
+//    public $allActs;
 
-    public $currentDay;
-    public $allDays;
+//    public $currentDay;
+//    public $allDays;
 
 
     /**
      * Create a new event instance.
      */
-    public function __construct($currentAct, $allActs, $currentDay, $allDays)
+    public function __construct()
     {
-        $this->currentAct = $currentAct;
-        $this->allActs = $allActs;
+//        $this->currentAct = $currentAct;
+//        $this->allActs = $allActs;
 
-        $this->currentDay = $currentDay;
-        $this->allDays = $allDays;
+//        $this->currentDay = $currentDay;
+//        $this->allDays = $allDays;
     }
 
     /**

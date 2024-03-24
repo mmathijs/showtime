@@ -67,7 +67,13 @@ onMounted(() => {
         })
         .listen('Countdown', (e) => {
             console.log(e);
-        }).listen('UpdateAllActs', (e) => {
+        }).listen('UpdateAllActs', async () => {
+        async function fetchUpdateAllActs() {
+            const response = await fetch('/update-all');
+            return await response.json();
+        }
+
+        const e = await fetchUpdateAllActs();
         // props.acts = e.allActs;
         // props.eventDays = e.allDays;
         days.value = Object.keys(actsByDay.value);

@@ -93,7 +93,14 @@ onMounted(() => {
             console.log(e);
             countdown.value = e.status === 'active' ? e.time : -1;
             showCountdown.value = e.status === 'active';
-        }).listen('UpdateAllActs', (e) => {
+        }).listen('UpdateAllActs', async () => {
+        async function fetchUpdateAllActs() {
+            const response = await fetch('/update-all');
+            return await response.json();
+        }
+
+        const e = await fetchUpdateAllActs();
+
         currentAct.value = e.currentAct;
 
         dayIdRef.value = e.currentDay.id;
