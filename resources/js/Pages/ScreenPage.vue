@@ -12,12 +12,17 @@ const props = defineProps({
 const currentAct = ref(props.currentAct);
 const show = ref(false);
 
+const winners = ref([]);
+const transitionToWinners = ref(false);
+const showWinners = ref(false);
+
 onMounted(() => {
     window.Echo.private('act-update')
         .listen('UpdateAct', (e) => {
             show.value = true;
             setTimeout(() => {
                 currentAct.value = e.act;
+                transitionToWinners.value = false;
             }, 1000);
             setTimeout(() => {
                 show.value = false;
@@ -26,8 +31,12 @@ onMounted(() => {
         .listen('Countdown', (e) => {
             console.log(e);
         }).listen('UpdateAllActs', (e) => {
-            currentAct.value = e.currentAct;
-        });
+        currentAct.value = e.currentAct;
+    }).listen('RevealWinners', (e) => {
+        winners.value = e.winners;
+        transitionToWinners.value = true;
+    })
+    ;
 });
 
 </script>
@@ -37,20 +46,21 @@ onMounted(() => {
         <div v-if="show" class="w-screen overflow-hidden z-10 h-screen absolute top-0 left-0 animation">
             <div class="left-half absolute h-full" style="background-color: blue"></div>
             <div class="middle-logo z-40 rounded-full bg-white absolute overflow-hidden">
-<!--                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">-->
+                <!--                <img class="w-full p-4 top-50 absolute" src="/assets/images/img.png" alt="logo">-->
                 <img class="w-full p-4 top-50 absolute" src="/assets/images/ijsingwekkend.jpg" alt="logo">
             </div>
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
-
         <div class="w-screen h-screen flex items-center">
             <div class="text-center my-auto mx-auto gap-1 flex flex-col" v-if="currentAct.display_type=== 'ActSingle'">
                 <h2 class="text-4xl text-gray-300 font-bold">{{ currentAct.type }}</h2>
                 <h1 class=" font-semibold leading-none" v-html="currentAct.name"
                     :class="currentAct.people == currentAct.name ? 'text-8xl mb-4' : 'text-7xl'"
                 ></h1>
-<!--                {{currentAct.people + ' ' + currentAct.name}}{{currentAct.name.toString().trimStart().trimEnd() === currentAct.people.toString().trimStart().trimEnd() }}-->
-                <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{ currentAct.people }}</p>
+                <!--                {{currentAct.people + ' ' + currentAct.name}}{{currentAct.name.toString().trimStart().trimEnd() === currentAct.people.toString().trimStart().trimEnd() }}-->
+                <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{
+                        currentAct.people
+                    }}</p>
             </div>
 
             <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px"
@@ -62,6 +72,25 @@ onMounted(() => {
                  v-else-if="currentAct.display_type==='Inloop'">
                 <h2 class="text-6xl font-semibold">{{ currentAct.description }}</h2>
             </div>
+            <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap"  style="max-width: 1300px"
+                 v-else-if="currentAct.display_type=== 'Winnaars'">
+                <div class="" :class="transitionToWinners?'titles' : ''">
+                    <h2 class="text-4xl -mb-2 text-gray-300 font-bold">{{ currentAct.type }}</h2>
+                    <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
+                </div>
+
+                <div class="flex flex-wrap winners" v-if="transitionToWinners">
+                    <div class="text-3xl flex gap-6 flex-wrap flex-col justify-center py-20"
+                         style="width: 1300px; min-height: 25rem">
+                        <h1 v-for="person in currentAct.description.split(',')" :key="person" class="text-white my-auto text-6xl font-se">{{
+                                person
+                            }}{{
+                                currentAct.description.split(',')[currentAct.description.split(',').length - 1] === person ? '' : ','
+                            }}</h1>
+
+                    </div>
+                </div>
+            </div>
             <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
                 <h2 class="text-4xl -mb-2 text-gray-300 font-bold">{{ currentAct.type }}</h2>
                 <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
@@ -71,7 +100,9 @@ onMounted(() => {
                         <p class="whitespace-nowrap text-center" v-for="person in currentAct.people.split(',')"
                            :key="person">{{
                                 person
-                            }}{{ currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ',' }} </p>
+                            }}{{
+                                currentAct.people.split(',')[currentAct.people.split(',').length - 1] === person ? '' : ','
+                            }} </p>
                     </div>
 
                 </div>
@@ -143,6 +174,35 @@ onMounted(() => {
 
 .flex-wrap {
     flex-wrap: wrap;
+}
+
+.titles {
+    animation: moveUp 2s  forwards;
+}
+
+.winners {
+    animation: appear 2s forwards;
+}
+
+@keyframes moveUp {
+    0% {
+        transform: translateY(100%);
+    }
+    50% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
 }
 
 </style>

@@ -47,8 +47,7 @@ onMounted(() => {
             </div>
             <div class="right-half absolute right-0 h-full" style="background-color: blue"></div>
         </div>
-
-        <div v-if="act.display_type=== 'ActSingle' || act.display_type=== 'ActBig'"
+        <div v-if="act.display_type=== 'ActSingle' || act.display_type=== 'ActBig' || act.display_type=== 'Winnaars'"
              class="absolute flex flex-col bottom-0 left-0 rounded-lg overflow-hidden w-screen h-screen">
             <div v-if="!act.hidden" class="m-4 absolute bottom-0">
                 <div class="bg-white p-4 w-60 rounded-t-lg">
@@ -56,8 +55,8 @@ onMounted(() => {
                 </div>
                 <div
                     class="bg-blue-800 h-24 p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
-                    style="width: 600px; text-align: right">
-                    {{ act.type }}
+                    style="width: 650px; text-align: right">
+                    {{ act.display_type === 'Winnaars' ? 'Winnaars: ' + act.name : act.type }}
                     <p></p>
                 </div>
             </div>
@@ -83,7 +82,9 @@ onMounted(() => {
                 <!--            <img src="/assets/images/download.png" width="150">-->
             </div>
             <div style="max-width: 1000px">
-                <h1 class="text-7xl font-semibold text-white text-center" v-if="act.display_type!=='Inloop'">{{ act.name }}</h1>
+                <h1 class="text-7xl font-semibold text-white text-center" v-if="act.display_type!=='Inloop'">{{
+                        act.name
+                    }}</h1>
                 <h2 class="text-6xl font-semibold text-white text-center">{{ act.description }}</h2>
             </div>
         </div>

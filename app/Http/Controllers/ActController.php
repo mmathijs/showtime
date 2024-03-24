@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Events\Countdown;
+use App\Events\RevealWinners;
 use App\Events\UpdateAct;
 use App\Events\UpdateAllActs;
 use App\Models\Act;
@@ -176,5 +177,50 @@ class ActController extends Controller
         }
 
         return $act;
+    }
+
+    private function winner(Act $act)
+    {
+        $winners = explode(',', $act->description);
+
+        event(new RevealWinners($act, $winners));
+    }
+
+    public function updateWinners()
+    {
+        if (!auth()->user()->hasPermissionTo('dashboard')) {
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $postData = request()->validate([
+            'act_id' => 'required|integer',
+            'winners' => 'required|string',
+        ]);
+
+        $act = Act::query()->where('id', $postData['act_id'])->first();
+
+        if (!$act) {
+            return response()->json(['message' => 'Act not found'], 404);
+        }
+
+        $act->description = $postData['winners'];
+        $act->save();
+
+        $this->updateAll();
+
+        return $act;
+    }
+
+    public function showWinners()
+    {
+        $winnersAct = $this->updateWinners();
+
+        if ($winnersAct instanceof Act) {
+            $this->winner($winnersAct);
+        } else {
+            return $winnersAct;
+        }
+
+        return $winnersAct;
     }
 }

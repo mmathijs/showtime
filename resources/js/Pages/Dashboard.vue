@@ -5,6 +5,8 @@ import {onMounted, ref} from "vue";
 import '../echo.js';
 import AdvancementDropdown from "@/Components/AdvancementDropdown.vue";
 import DayDropdown from "@/Components/DayDropdown.vue";
+import Dropdown from "@/Components/Dropdown.vue";
+import WinnerDropdown from "@/Components/WinnerDropdown.vue";
 
 const props = defineProps({
     acts: {
@@ -20,6 +22,8 @@ const props = defineProps({
         required: true
     }
 });
+
+const showWinnersModal = ref(null);
 
 const currentAct = ref(props.currentAct);
 let filter = props.eventDays.filter((day) => {
@@ -64,39 +68,49 @@ onMounted(() => {
         .listen('Countdown', (e) => {
             console.log(e);
         }).listen('UpdateAllActs', (e) => {
-            // props.acts = e.allActs;
-            // props.eventDays = e.allDays;
-            days.value = Object.keys(actsByDay.value);
+        // props.acts = e.allActs;
+        // props.eventDays = e.allDays;
+        days.value = Object.keys(actsByDay.value);
 
-            actsByDay.value = {};
+        actsByDay.value = {};
 
-            for (let i = 0; i < e.allActs.length; i++) {
-                const act = e.allActs[i];
-                const day = act.day;
+        for (let i = 0; i < e.allActs.length; i++) {
+            const act = e.allActs[i];
+            const day = act.day;
 
-                if (actsByDay.value[day] === undefined) {
-                    actsByDay.value[day] = [];
-                }
-
-                actsByDay.value[day].push(act);
+            if (actsByDay.value[day] === undefined) {
+                actsByDay.value[day] = [];
             }
 
-            actsByDay.value[currentDay.value].sort((a, b) => {
-                return a.start_time.localeCompare(b.start_time);
-            });
+            actsByDay.value[day].push(act);
+        }
 
-            currentDay.value = e.allDays.find((day) => {
-                console.log(day);
-                return day.current;
-            }).id;
+        actsByDay.value[currentDay.value].sort((a, b) => {
+            return a.start_time.localeCompare(b.start_time);
+        });
 
-            currentAct.value = e.currentAct;
-        })
+        currentDay.value = e.allDays.find((day) => {
+            console.log(day);
+            return day.current;
+        }).id;
+
+        currentAct.value = e.currentAct;
+    })
     ;
 });
 
 function launchAct(act) {
     if (act.id === currentAct.value.id) {
+
+        if (act.type === 'Winnaars') {
+            showWinnersModal.value = {
+                winners: act.description ? act.description.split(',') : [],
+                winnersKeys: Array.from(Array(act.description ? act.description.split(',').length : 0).keys()),
+                ...act
+            };
+            return;
+        }
+
         axios.post('/act/start', {
             act_id: act.id
         })
@@ -124,6 +138,40 @@ function updateAllActs() {
     axios.post('/act/update-all')
         .then((response) => {
             console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function updateWinners() {
+    const winners = showWinnersModal.value.winners.filter((winner) => {
+        return winner !== '';
+    });
+    axios.post('/act/update-winners', {
+        act_id: showWinnersModal.value.id,
+        winners: winners.join(',')
+    })
+        .then((response) => {
+            console.log(response);
+            showWinnersModal.value = null;
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+}
+
+function showWinners() {
+    const winners = showWinnersModal.value.winners.filter((winner) => {
+        return winner !== '';
+    });
+    axios.post('/act/show-winners', {
+        act_id: showWinnersModal.value.id,
+        winners: winners.join(',')
+    })
+        .then((response) => {
+            console.log(response);
+            showWinnersModal.value = null;
         })
         .catch((error) => {
             console.log(error);
@@ -219,7 +267,9 @@ function updateAllActs() {
                                         :class="act.id === currentAct.id ? 'bg-green-200  dark:bg-green-500 hover:bg-green-300 dark:hover:bg-green-600' :
                                         'bg-indigo-600  dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600'"
                                     >
-                                        {{ act.id === currentAct.id ? 'Start' : 'Launch' }}
+                                        {{
+                                            act.id === currentAct.id ? currentAct.type === 'Winnaars' ? 'Reveal' : 'Start' : 'Launch'
+                                        }}
                                     </button>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -235,8 +285,54 @@ function updateAllActs() {
                         </table>
                     </div>
 
-                    <button @click="updateAllActs" class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-4 py-2 rounded-b-md w-full">
+                    <button @click="updateAllActs"
+                            class="bg-indigo-600 dark:bg-indigo-500 hover:bg-indigo-700 dark:hover:bg-indigo-600 text-white px-4 py-2 rounded-b-md w-full">
                         Update All Acts
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-screen h-screen fixed top-0 left-0 flex items-center justify-center z-50"
+             v-if="showWinnersModal">
+            <div class="bg-opacity-50 bg-black w-screen h-screen fixed top-0 left-0"
+                 @click="showWinnersModal = null"></div>
+            <div class="bg-white dark:bg-gray-800 lg:w-1/2 p-6 rounded-lg shadow-lg z-50">
+                <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200">Winners:
+                    {{ showWinnersModal.name }}</h2>
+
+                <div id="winners" class="mt-4">
+                    <h1 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Winners</h1>
+                    <div v-for="key in showWinnersModal.winnersKeys" :key="key"
+                         class="text-lg font-semibold text-gray-800 dark:text-gray-200 flex mt-2">
+                        <WinnerDropdown class="w-full" :currentAct="showWinnersModal"
+                                        :winners="showWinnersModal.winners" v-model="showWinnersModal.winners[key]"
+                                        :acts="actsByDay[currentDay]"/>
+                        <button
+                            @click="showWinnersModal.winners.splice(key, 1); showWinnersModal.winnersKeys = Array.from(Array(showWinnersModal.winners.length).keys());"
+                            class="bg-red-600 ml-2 dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600 text-white px-4 py-2 rounded-md">
+                            X
+                        </button>
+                    </div>
+                    <button
+                        @click="showWinnersModal.winners.push(''); showWinnersModal.winnersKeys = Array.from(Array(showWinnersModal.winners.length).keys());"
+                        class="bg-blue-600 w-full dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-md mt-2">
+                        Add Winner
+                    </button>
+                </div>
+
+                <div class="mt-4 flex flex-col lg:flex-row justify-between gap-2 lg:gap-4">
+                    <button @click="showWinnersModal = null"
+                            class="bg-red-600 w-full dark:bg-red-500 hover:bg-red-700 dark:hover:bg-red-600 text-white px-4 py-2 rounded-md">
+                        Cancel
+                    </button>
+                    <button @click="updateWinners"
+                            class="bg-blue-600 w-full dark:bg-blue-500 hover:bg-blue-700 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-md">
+                        Update Winners
+                    </button>
+                    <button @click="showWinners"
+                            class="bg-green-600 w-full dark:bg-green-500 hover:bg-green-700 dark:hover:bg-green-600 text-white px-4 py-2 rounded-md">
+                        Show + Update Winners
                     </button>
                 </div>
             </div>
