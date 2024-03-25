@@ -91,7 +91,7 @@ onMounted(() => {
                     <carousel class="winners" autoplay="10000" :wrap-around="Object.keys(winners).length > 1"
                               transition="1000">
                         <slide v-for="(winner,winnerKey) in winners" :class="transitionToWinners?'':''"
-                               class="text-3xl flex gap-8 mb-20 flex-wrap flex-col justify-center pb-20"
+                               class="text-3xl flex gap-4 mb-20 flex-wrap flex-col justify-center pb-20"
                                style="width: 1300px;">
                             <h1 v-if="winnerKey !== 'default'" class="text-gray-300 text-7xl mb-4 pt-4 font-semibold">
                                 {{ winnerKey }}:</h1>
