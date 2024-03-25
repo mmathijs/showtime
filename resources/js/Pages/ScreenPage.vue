@@ -1,6 +1,8 @@
 <script setup>
 
 import {onMounted, ref} from "vue";
+import {Carousel, Slide} from "vue3-carousel";
+import 'vue3-carousel/dist/carousel.css';
 
 const props = defineProps({
     currentAct: {
@@ -85,17 +87,17 @@ onMounted(() => {
                     <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
                 </div>
 
-                <div class="flex flex-wrap winners" v-if="transitionToWinners">
-                    <div class="text-3xl flex gap-6 flex-wrap flex-col justify-center py-20"
+                <carousel class="w-full overflow-hidden" v-if="transitionToWinners" autoplay="5000" :wrap-around="winners.length > 1" transition="1000">
+                    <slide v-for="(winner,winnerKey) in winners" class="text-3xl flex gap-6 mb-20 flex-wrap flex-col justify-center pb-20"
                          style="width: 1300px; min-height: 25rem">
-                        <h1 v-for="person in currentAct.description.split(',')" :key="person" class="text-white my-auto text-6xl font-se">{{
+                        <h1 v-if="winnerKey !== 'default'" class="text-white text-6xl mb-4 font-semibold">{{ winnerKey }}:</h1>
+                        <h1 v-for="person in winner" :key="person" class="text-white text-6xl ">{{
                                 person
                             }}{{
-                                currentAct.description.split(',')[currentAct.description.split(',').length - 1] === person ? '' : ','
-                            }}</h1>
 
-                    </div>
-                </div>
+                            }}</h1>
+                    </slide>
+                </carousel>
             </div>
             <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
                 <h2 class="text-4xl -mb-2 text-gray-300 font-bold">{{ currentAct.type }}</h2>
@@ -188,6 +190,46 @@ onMounted(() => {
 
 .winners {
     animation: appear 2s forwards;
+}
+
+.titles h2 {
+    animation: makeBigger 2s  forwards;
+}
+
+.titles h1 {
+    animation: dissapear 2s  forwards;
+}
+
+@keyframes dissapear {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+}
+
+@keyframes makeBigger {
+    0% {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        color: rgb(209 213 219);
+    }
+    50% {
+        font-size: 4rem;
+        line-height: 3.5rem;
+        color: rgb(209 213 219);
+    }
+    100% {
+        font-size: 6rem;
+        line-height: 3.5rem;
+        color: rgb(255, 255, 255);
+    }
 }
 
 @keyframes moveUp {

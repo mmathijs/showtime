@@ -188,7 +188,36 @@ class ActController extends Controller
     {
         $winners = explode(',', $act->description);
 
-        event(new RevealWinners($act, $winners));
+        $winnersByType = [];
+
+        foreach ($winners as $winner) {
+            $winner = explode('+=', $winner);
+
+            if (!isset($winner[1])) {
+
+                if (!isset($winnersByType['default'])) {
+                    $winnersByType['default'] = [];
+                }
+
+                $winnersByType['default'][] = $winner[0];
+
+                continue;
+            }
+
+            if (!isset($winnersByType[$winner[0]])) {
+                $winnersByType[$winner[0]] = [];
+            }
+
+            Log::debug($winner[0]);
+            Log::debug($winner[1]);
+            Log::debug($winnersByType);
+
+            $winnersByType[$winner[0]][] = $winner[1];
+
+            Log::debug($winnersByType);
+        }
+
+        event(new RevealWinners($act, $winnersByType));
     }
 
     public function updateWinners()
