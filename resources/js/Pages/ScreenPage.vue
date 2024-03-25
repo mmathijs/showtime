@@ -88,7 +88,7 @@ onMounted(() => {
                 </div>
 
                 <div class="w-full overflow-hidden" v-if="transitionToWinners">
-                    <carousel class="winners" autoplay="5000" :wrap-around="Object.keys(winners).length > 1"
+                    <carousel class="winners" autoplay="10000" :wrap-around="Object.keys(winners).length > 1"
                               transition="1000">
                         <slide v-for="(winner,winnerKey) in winners" :class="transitionToWinners?'':''"
                                class="text-3xl flex gap-6 mb-20 flex-wrap flex-col justify-center pb-20"
