@@ -110,7 +110,7 @@ onMounted(() => {
                 <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
                 <div class="flex flex-wrap">
                     <!-- Show all people, but split the all names on the , to make sure every name is on a compelte line                    -->
-                    <div class="text-3xl flex gap-2 flex-wrap justify-center" style="width: 1000px">
+                    <div class="text-5xl flex gap-2 flex-wrap justify-center" style="width: 800px">
                         <p class="whitespace-nowrap text-center" v-for="person in currentAct.people.split(',')"
                            :key="person">{{
                                 person
