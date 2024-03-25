@@ -87,13 +87,13 @@ onMounted(() => {
                     <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
                 </div>
 
-                <div class="w-full overflow-hidden" v-if="transitionToWinners">
+                <div class="w-full" v-if="transitionToWinners">
                     <carousel class="winners" autoplay="10000" :wrap-around="Object.keys(winners).length > 1"
                               transition="1000">
                         <slide v-for="(winner,winnerKey) in winners" :class="transitionToWinners?'':''"
-                               class="text-3xl flex gap-6 mb-20 flex-wrap flex-col justify-center pb-20"
-                               style="width: 1300px; min-height: 25rem">
-                            <h1 v-if="winnerKey !== 'default'" class="text-gray-300 text-6xl mb-4 font-semibold">
+                               class="text-3xl flex gap-8 mb-20 flex-wrap flex-col justify-center pb-20"
+                               style="width: 1300px;">
+                            <h1 v-if="winnerKey !== 'default'" class="text-gray-300 text-7xl mb-4 pt-4 font-semibold">
                                 {{ winnerKey }}:</h1>
                             <h1 v-for="person in winner" :key="person" class="text-white mt-4 text-7xl ">{{
                                     person
