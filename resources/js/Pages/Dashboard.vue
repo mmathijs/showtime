@@ -110,8 +110,8 @@ function launchAct(act) {
 
         if (act.type === 'Winnaars') {
             showWinnersModal.value = {
-                winners: act.description ? act.description.split(',') : [],
-                winnersKeys: Array.from(Array(act.description ? act.description.split(',').length : 0).keys()),
+                winners: act.description ? act.description.split(';') : [],
+                winnersKeys: Array.from(Array(act.description ? act.description.split(';').length : 0).keys()),
                 ...act
             };
             return;
