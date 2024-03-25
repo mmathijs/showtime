@@ -95,7 +95,7 @@ onMounted(() => {
                                style="width: 1300px;">
                             <h1 v-if="winnerKey !== 'default'" class="text-gray-300 text-7xl mb-4 pt-4 font-semibold">
                                 {{ winnerKey }}:</h1>
-                            <h1 v-for="person in winner" :key="person" class="text-white mt-4 text-7xl ">{{
+                            <h1 v-for="person in winner" :key="person" class="text-white mt-4 text-6xl ">{{
                                     person
                                 }}{{
 
