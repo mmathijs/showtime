@@ -14,7 +14,7 @@ const props = defineProps({
 const currentAct = ref(props.currentAct);
 const show = ref(false);
 
-const winners = ref([]);
+const winners = ref({});
 const transitionToWinners = ref(false);
 const showWinners = ref(false);
 
@@ -87,8 +87,8 @@ onMounted(() => {
                     <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
                 </div>
 
-                <div class="w-full overflow-hidden"  v-if="transitionToWinners">
-                    <carousel class="winners" autoplay="5000" :wrap-around="winners.length > 1"
+                <div class="w-full overflow-hidden" v-if="transitionToWinners">
+                    <carousel class="winners" autoplay="5000" :wrap-around="Object.keys(winners).length > 1"
                               transition="1000">
                         <slide v-for="(winner,winnerKey) in winners" :class="transitionToWinners?'':''"
                                class="text-3xl flex gap-6 mb-20 flex-wrap flex-col justify-center pb-20"
@@ -205,7 +205,7 @@ onMounted(() => {
     animation: dissapear 2s forwards;
 }
 
-@keyframes dissapear {
+/*@keyframes dissapear {
     0% {
         opacity: 1;
     }
@@ -217,9 +217,9 @@ onMounted(() => {
         opacity: 0;
         transform: translateY(100%);
     }
-}
+}*/
 
-@keyframes makeBigger {
+/*@keyframes makeBigger {
     0% {
         font-size: 2.25rem;
         line-height: 2.5rem;
@@ -235,14 +235,25 @@ onMounted(() => {
         line-height: 3.5rem;
         color: rgb(255, 255, 255);
     }
-}
+}*/
 
 @keyframes moveUp {
     0% {
         transform: translateY(100%);
+        opacity: 1;
     }
     50% {
         transform: translateY(0);
+        opacity: 0;
+    }
+    75% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    100% {
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
     }
 }
 
