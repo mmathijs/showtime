@@ -80,24 +80,29 @@ onMounted(() => {
                  v-else-if="currentAct.display_type==='Inloop'">
                 <h2 class="text-6xl font-semibold">{{ currentAct.description }}</h2>
             </div>
-            <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap"  style="max-width: 1300px"
+            <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap" style="max-width: 1300px"
                  v-else-if="currentAct.display_type=== 'Winnaars'">
                 <div class="" :class="transitionToWinners?'titles' : ''">
                     <h2 class="text-4xl -mb-2 text-gray-300 font-bold">{{ currentAct.type }}</h2>
                     <h1 class="text-8xl font-semibold">{{ currentAct.name }}</h1>
                 </div>
 
-                <carousel class="w-full overflow-hidden" v-if="transitionToWinners" autoplay="5000" :wrap-around="winners.length > 1" transition="1000">
-                    <slide v-for="(winner,winnerKey) in winners" class="text-3xl flex gap-6 mb-20 flex-wrap flex-col justify-center pb-20"
-                         style="width: 1300px; min-height: 25rem">
-                        <h1 v-if="winnerKey !== 'default'" class="text-white text-6xl mb-4 font-semibold">{{ winnerKey }}:</h1>
-                        <h1 v-for="person in winner" :key="person" class="text-white text-6xl ">{{
-                                person
-                            }}{{
+                <div class="w-full overflow-hidden"  v-if="transitionToWinners">
+                    <carousel class="winners" autoplay="5000" :wrap-around="winners.length > 1"
+                              transition="1000">
+                        <slide v-for="(winner,winnerKey) in winners" :class="transitionToWinners?'':''"
+                               class="text-3xl flex gap-6 mb-20 flex-wrap flex-col justify-center pb-20"
+                               style="width: 1300px; min-height: 25rem">
+                            <h1 v-if="winnerKey !== 'default'" class="text-gray-300 text-6xl mb-4 font-semibold">
+                                {{ winnerKey }}:</h1>
+                            <h1 v-for="person in winner" :key="person" class="text-white mt-4 text-7xl ">{{
+                                    person
+                                }}{{
 
-                            }}</h1>
-                    </slide>
-                </carousel>
+                                }}</h1>
+                        </slide>
+                    </carousel>
+                </div>
             </div>
             <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap" style="max-width: 1000px" v-else>
                 <h2 class="text-4xl -mb-2 text-gray-300 font-bold">{{ currentAct.type }}</h2>
@@ -185,7 +190,7 @@ onMounted(() => {
 }
 
 .titles {
-    animation: moveUp 2s  forwards;
+    animation: moveUp 2s forwards;
 }
 
 .winners {
@@ -193,11 +198,11 @@ onMounted(() => {
 }
 
 .titles h2 {
-    animation: makeBigger 2s  forwards;
+    animation: makeBigger 2s forwards;
 }
 
 .titles h1 {
-    animation: dissapear 2s  forwards;
+    animation: dissapear 2s forwards;
 }
 
 @keyframes dissapear {
