@@ -186,7 +186,7 @@ class ActController extends Controller
 
     private function winner(Act $act)
     {
-        $winners = explode(',', $act->description);
+        $winners = explode(';', $act->description);
 
         $winnersByType = [];
 

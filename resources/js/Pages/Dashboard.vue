@@ -156,7 +156,7 @@ function updateWinners() {
     });
     axios.post('/act/update-winners', {
         act_id: showWinnersModal.value.id,
-        winners: winners.join(',')
+        winners: winners.join(';')
     })
         .then((response) => {
             console.log(response);
@@ -173,7 +173,7 @@ function showWinners() {
     });
     axios.post('/act/show-winners', {
         act_id: showWinnersModal.value.id,
-        winners: winners.join(',')
+        winners: winners.join(';')
     })
         .then((response) => {
             console.log(response);
