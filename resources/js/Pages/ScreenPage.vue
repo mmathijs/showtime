@@ -66,7 +66,8 @@ onMounted(() => {
                     :class="currentAct.people == currentAct.name ? 'text-8xl mb-4' : 'text-7xl'"
                 ></h1>
                 <!--                {{currentAct.people + ' ' + currentAct.name}}{{currentAct.name.toString().trimStart().trimEnd() === currentAct.people.toString().trimStart().trimEnd() }}-->
-                <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{
+                <p class="text-4xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">Door</p>
+                <p class="text-6xl mt-4 font-semibold" v-if="currentAct.people !== currentAct.name">{{
                         currentAct.people
                     }}</p>
             </div>
