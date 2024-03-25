@@ -60,8 +60,8 @@ onMounted(() => {
                     <img src="/assets/images/logo.svg">
                 </div>
                 <div
-                    class="bg-blue-800 h-24 p-4  text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
-                    style="width: 650px; text-align: right">
+                    class="bg-blue-800 h-24 p-4 truncate w-full text-white text-5xl flex place-items-center rounded-b-xl rounded-r-xl"
+                    style="min-width: 650px; text-align: right">
                     {{ act.display_type === 'Winnaars' ? 'Winnaars: ' + act.name : act.type }}
                     <p></p>
                 </div>
@@ -164,5 +164,6 @@ onMounted(() => {
         transform: scale(0);
     }
 }
+
 
 </style>
