@@ -79,7 +79,7 @@ onMounted(() => {
             </div>
             <div class="text-center my-auto mx-auto gap-6 flex flex-col flex-wrap" style="max-width: 1000px"
                  v-else-if="currentAct.display_type==='Inloop'">
-                <h2 class="text-6xl font-semibold">{{ currentAct.description }}</h2>
+                <h2 class="text-6xl font-semibold" v-html="currentAct.description"></h2>
             </div>
             <div class="text-center my-auto mx-auto gap-1 flex flex-col flex-wrap" style="max-width: 1300px"
                  v-else-if="currentAct.display_type=== 'Winnaars'">
