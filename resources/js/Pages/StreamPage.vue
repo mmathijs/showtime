@@ -91,7 +91,7 @@ onMounted(() => {
                 <h1 class="text-7xl font-semibold text-white text-center" v-if="act.display_type!=='Inloop'">{{
                         act.name
                     }}</h1>
-                <h2 class="text-6xl font-semibold text-white text-center">{{ act.description }}</h2>
+                <h2 class="text-6xl font-semibold text-white text-center">{{ act.description.split('<br>')[0] }}</h2>
             </div>
         </div>
     </div>
