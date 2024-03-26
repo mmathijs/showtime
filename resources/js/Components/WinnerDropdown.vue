@@ -30,7 +30,7 @@ function getB(act) {
     return act.type.toLowerCase().startsWith(props.currentAct.name.toLowerCase());
 }
 
-const possibleWinners = ref(props.acts.filter(act => getB(act)).map(act => act.name + ': ' + act.people));
+const possibleWinners = ref(props.acts.filter(act => getB(act)).map(act => act.type + '+=' +act.name + ': ' + act.people));
 
 const custom = ref('');
 
